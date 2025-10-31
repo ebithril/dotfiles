@@ -6,13 +6,13 @@ Complete port of eww configuration to quickshell, including bar and control cent
 
 ### Bar
 Matches the original eww bar design:
-- **Left**: Hyprland workspace indicator with icons
+- **Left**: Hyprland workspace indicator (circles that scale and change color for active workspace)
 - **Center**: Music player (shows currently playing via MPRIS/playerctl)
-- **Right**: Clock/time display
+- **Right**: Gear button to toggle control center, Clock/time display
 - **Styling**: Grey background (#2E333F), cyan text (#B9EFF8), blue highlights (#2f76dc), FiraCode font
 
 ### Control Center
-Full-featured control panel (opens on right side):
+Full-featured control panel (opens on right side, click gear icon):
 - **Toggle Controls**: Volume mute, WiFi, Bluetooth, Idle inhibitor (with colored buttons)
 - **Sliders**: Volume and brightness adjustable controls
 - **System Stats**: Circular progress indicators for CPU, RAM, Disk, Battery
@@ -37,20 +37,43 @@ Full-featured control panel (opens on right side):
    chmod +x ~/dotfiles/eww/scripts/*
    ```
 
-4. Launch quickshell (already configured in hyprland.conf)
+4. **(Optional) Install Nerd Font for better workspace icons:**
+   ```bash
+   # On Arch/Manjaro:
+   sudo pacman -S ttf-nerd-fonts-symbols-mono
+   # Or download from: https://www.nerdfonts.com/
+   ```
+
+   After installing, edit `quickshell/bar/components/WorkspacesEwwStyle.qml` to use Nerd Font icons.
+   Currently using simple circles (●) which work without special fonts.
+
+5. Launch quickshell (already configured in hyprland.conf)
 
 ## Usage
 
 ### Opening Control Center
 
-The control center can be toggled by modifying `shell.qml` to set `controlCenter.shown = true/false`. You can bind this to a keybinding in hyprland or create a toggle mechanism.
+Click the **gear icon (⚙)** in the top-right corner of the bar to toggle the control center.
 
-To make it visible by default, edit `quickshell/shell.qml`:
+The control center will slide in from the right with all controls.
+
+## Workspace Icons
+
+Currently using simple Unicode circles (●) that work without special fonts.
+
+To use fancy icons like the original eww config, install a Nerd Font and edit the `workspaceIcons` array in `bar/components/WorkspacesEwwStyle.qml`:
+
 ```qml
-ControlCenter {
-    id: controlCenter
-    shown: true  // Add this line
-}
+property var workspaceIcons: [
+    {"id": 1, "icon": ""},  // Terminal
+    {"id": 2, "icon": ""},  // Browser
+    // ... etc
+]
+```
+
+And change the font family to:
+```qml
+font.family: "Symbols Nerd Font"
 ```
 
 ## Structure
@@ -62,6 +85,7 @@ quickshell/
 │   ├── Bar.qml            # Bar layout (eww-styled)
 │   └── components/        # Bar widgets
 │       ├── WorkspacesEwwStyle.qml
+│       ├── ControlCenterButton.qml
 │       ├── MusicWidget.qml
 │       ├── ClockWidget.qml
 │       ├── Time.qml (singleton)
@@ -108,3 +132,4 @@ To add them to the bar, edit `bar/Bar.qml`.
 - NetworkManager (for WiFi)
 - PulseAudio/Pipewire (for audio)
 - eww scripts directory (for idle/bluetooth checks)
+- **(Optional)** Nerd Font for fancy icons
