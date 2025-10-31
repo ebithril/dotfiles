@@ -1,0 +1,8 @@
+singleton Time Time.qml
+ControlCenter 1.0 ControlCenter.qml
+ToggleControls 1.0 ToggleControls.qml
+ToggleButton 1.0 ToggleButton.qml
+AdjustableControls 1.0 AdjustableControls.qml
+ControlMetric 1.0 ControlMetric.qml
+SystemInfo 1.0 SystemInfo.qml
+SystemStat 1.0 SystemStat.qml

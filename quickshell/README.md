@@ -1,84 +1,110 @@
 # Quickshell Configuration
 
-This is a quickshell configuration ported from eww, with a volume OSD (on-screen display).
+Complete port of eww configuration to quickshell, including bar and control center.
 
 ## Features
 
 ### Bar
-- **Hyprland workspace indicator** - Animated workspace switcher with mouse wheel support
-- **Music player widget** - Shows currently playing track (via MPRIS)
-- **Clock** - Time display
+Matches the original eww bar design:
+- **Left**: Hyprland workspace indicator with icons
+- **Center**: Music player (shows currently playing via MPRIS/playerctl)
+- **Right**: Clock/time display
+- **Styling**: Grey background (#2E333F), cyan text (#B9EFF8), blue highlights (#2f76dc), FiraCode font
 
-### OSD (On-Screen Display)
-- **Volume popup** - Shows when volume changes via media keys or PulseAudio/Pipewire
-- Displays volume icon and visual progress bar
+### Control Center
+Full-featured control panel (opens on right side):
+- **Toggle Controls**: Volume mute, WiFi, Bluetooth, Idle inhibitor (with colored buttons)
+- **Sliders**: Volume and brightness adjustable controls
+- **System Stats**: Circular progress indicators for CPU, RAM, Disk, Battery
+- **Header**: Current time display
+
+### Volume OSD
+- Shows when volume changes via media keys or PulseAudio/Pipewire
+- Visual progress bar at bottom center
 - Auto-hides after 1 second
-- Positioned at bottom center of screen
-
-### Additional Widgets (Available but not in bar)
-The following widgets are available in `bar/components/` but not currently displayed:
-- CPU usage monitor
-- Memory usage monitor
-- Temperature monitor
-- Network status
-- Battery indicator
-- Backlight/brightness control
-- Audio widget with click controls
-- System tray
-- Window title display
 
 ## Installation
 
-1. Install quickshell: Follow instructions at https://quickshell.outfoxxed.me
+1. Install quickshell: https://quickshell.outfoxxed.me
 
-2. Link or copy this configuration:
+2. Link configuration:
    ```bash
    ln -s ~/dotfiles/quickshell ~/.config/quickshell
    ```
 
-3. The quickshell config will launch automatically via hyprland.conf
+3. Ensure eww scripts are executable:
+   ```bash
+   chmod +x ~/dotfiles/eww/scripts/*
+   ```
+
+4. Launch quickshell (already configured in hyprland.conf)
+
+## Usage
+
+### Opening Control Center
+
+The control center can be toggled by modifying `shell.qml` to set `controlCenter.shown = true/false`. You can bind this to a keybinding in hyprland or create a toggle mechanism.
+
+To make it visible by default, edit `quickshell/shell.qml`:
+```qml
+ControlCenter {
+    id: controlCenter
+    shown: true  // Add this line
+}
+```
 
 ## Structure
 
 ```
 quickshell/
-├── shell.qml           # Main entry point
+├── shell.qml              # Main entry point
 ├── bar/
-│   ├── Bar.qml         # Bar layout and configuration
-│   └── components/     # Individual widgets
-│       ├── workspaces/
-│       ├── ClockWidget.qml
+│   ├── Bar.qml            # Bar layout (eww-styled)
+│   └── components/        # Bar widgets
+│       ├── WorkspacesEwwStyle.qml
 │       ├── MusicWidget.qml
-│       └── ...
+│       ├── ClockWidget.qml
+│       ├── Time.qml (singleton)
+│       └── ... (additional widgets)
 ├── osd/
-│   └── Osd.qml         # Volume popup overlay
-└── Colors.qml          # Color definitions (for future wal support)
+│   └── Osd.qml            # Volume popup
+├── controlcenter/
+│   ├── ControlCenter.qml  # Main control center window
+│   ├── ToggleControls.qml # Mute/WiFi/BT/Idle toggles
+│   ├── AdjustableControls.qml  # Volume/brightness sliders
+│   ├── SystemInfo.qml     # CPU/RAM/Disk/Battery stats
+│   ├── Time.qml (singleton)
+│   └── ... (sub-components)
+└── Colors.qml             # Color definitions
 ```
 
-## Customization
+## Color Scheme
 
-To add more widgets to the bar, edit `bar/Bar.qml` and add widgets from the `components/` directory to the right side RowLayout.
+Based on eww configuration:
+- **Background**: #2E333F (grey)
+- **Foreground**: #B9EFF8 (cyan)
+- **Highlight**: #2f76dc (blue)
+- **Accent colors**:
+  - Crimson: #E62C39 (volume/CPU)
+  - Gold: #DFC18A (WiFi/RAM)
+  - Blue: #2f76dc (Bluetooth/Disk)
+  - Mango: #FBC920 (Idle/Battery)
 
-Example:
-```qml
-RowLayout {
-    Layout.alignment: Qt.AlignRight
-    Layout.rightMargin: 10
-    spacing: 15
+## Additional Widgets
 
-    BatteryWidget {}
-    NetworkWidget {}
-    ClockWidget {}
-}
-```
+The following widgets are available in `bar/components/` but not currently displayed:
+- AudioWidget, BacklightWidget, BatteryWidget
+- CpuWidget, MemoryWidget, TemperatureWidget
+- NetworkWidget, SystemTray, WindowTitle
 
-## Volume OSD
+To add them to the bar, edit `bar/Bar.qml`.
 
-The volume OSD automatically shows when:
-- Volume is changed via media keys (XF86AudioRaiseVolume, XF86AudioLowerVolume)
-- Volume is changed via PulseAudio/Pipewire
-- Mute state is toggled
+## Dependencies
 
-The popup displays for 1 second and shows:
-- Volume icon
-- Visual volume bar with current volume level
+- quickshell
+- Hyprland
+- playerctl (for music)
+- brightnessctl (for brightness)
+- NetworkManager (for WiFi)
+- PulseAudio/Pipewire (for audio)
+- eww scripts directory (for idle/bluetooth checks)

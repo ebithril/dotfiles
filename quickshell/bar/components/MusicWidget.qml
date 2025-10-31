@@ -2,11 +2,10 @@ import QtQuick
 import Quickshell
 import Quickshell.Services.Mpris
 
-Rectangle {
+Item {
     id: musicWidget
-    implicitWidth: label.visible ? label.width + 20 : 0
+    implicitWidth: label.visible ? label.implicitWidth : 0
     implicitHeight: 25
-    color: "transparent"
 
     property var player: Mpris.players[0]
 
@@ -25,8 +24,9 @@ Rectangle {
             }
             return ""
         }
-        color: "#E5E1E9"
-        font.pixelSize: 10
+        color: "#B9EFF8"  // eww cyan
+        font.pixelSize: 12
+        font.family: "FiraCode"
         elide: Text.ElideRight
         maximumLineCount: 1
     }
