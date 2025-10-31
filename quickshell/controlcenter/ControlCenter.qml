@@ -29,7 +29,6 @@ Scope {
             anchors.fill: true
             color: "transparent"
             exclusiveZone: 0
-            layer: Quickshell.Layer.Overlay
 
             MouseArea {
                 anchors.fill: parent
@@ -57,7 +56,6 @@ Scope {
             height: screen.height - 10
             color: "transparent"
             exclusiveZone: 0
-            layer: Quickshell.Layer.Overlay
 
             mask: Region { item: bg }
 
