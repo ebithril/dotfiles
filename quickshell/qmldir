@@ -1,0 +1,14 @@
+singleton Colors Colors.qml
+Bar 1.0 Bar.qml
+Workspaces 1.0 Workspaces.qml
+WindowTitle 1.0 WindowTitle.qml
+CpuWidget 1.0 CpuWidget.qml
+MemoryWidget 1.0 MemoryWidget.qml
+TemperatureWidget 1.0 TemperatureWidget.qml
+BacklightWidget 1.0 BacklightWidget.qml
+NetworkWidget 1.0 NetworkWidget.qml
+BatteryWidget 1.0 BatteryWidget.qml
+AudioWidget 1.0 AudioWidget.qml
+ClockWidget 1.0 ClockWidget.qml
+SystemTray 1.0 SystemTray.qml
+VolumePopup 1.0 VolumePopup.qml

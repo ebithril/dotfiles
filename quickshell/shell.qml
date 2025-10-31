@@ -4,5 +4,6 @@ import "bar"
 import "osd"
 
 Scope {
+    Bar {}
     Osd {}
 }
