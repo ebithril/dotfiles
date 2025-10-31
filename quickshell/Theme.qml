@@ -16,49 +16,29 @@ QtObject {
             accent3: "#268bd2",  // blue
             accent4: "#cb4b16"   // orange
         },
-        "nord": {
-            name: "Nord",
-            background: "#2e3440",
-            foreground: "#d8dee9",
-            highlight: "#88c0d0",
-            accent1: "#bf616a",  // red
-            accent2: "#ebcb8b",  // yellow
-            accent3: "#81a1c1",  // blue
-            accent4: "#b48ead"   // purple
+        "onepiece": {
+            name: "One Piece",
+            background: "#1a1a2e",  // dark navy (placeholder)
+            foreground: "#eee",     // light text (placeholder)
+            highlight: "#dc143c",   // crimson red for Luffy (placeholder)
+            accent1: "#dc143c",     // red (placeholder)
+            accent2: "#ffd700",     // straw hat gold (placeholder)
+            accent3: "#4169e1",     // ocean blue (placeholder)
+            accent4: "#ff6347"      // orange-red (placeholder)
         },
-        "dracula": {
-            name: "Dracula",
-            background: "#282a36",
-            foreground: "#f8f8f2",
-            highlight: "#bd93f9",
-            accent1: "#ff5555",  // red
-            accent2: "#f1fa8c",  // yellow
-            accent3: "#8be9fd",  // cyan
-            accent4: "#ffb86c"   // orange
-        },
-        "gruvbox": {
-            name: "Gruvbox Dark",
-            background: "#282828",
-            foreground: "#ebdbb2",
-            highlight: "#458588",
-            accent1: "#cc241d",  // red
-            accent2: "#d79921",  // yellow
-            accent3: "#458588",  // blue
-            accent4: "#d65d0e"   // orange
-        },
-        "eww": {
-            name: "EWW Original",
-            background: "#2E333F",
-            foreground: "#B9EFF8",
-            highlight: "#2f76dc",
-            accent1: "#E62C39",  // crimson
-            accent2: "#DFC18A",  // gold
-            accent3: "#2f76dc",  // blue
-            accent4: "#FBC920"   // mango
+        "brynas": {
+            name: "Brynäs",
+            background: "#1a1a1a",  // dark background (placeholder)
+            foreground: "#e0e0e0",  // light text (placeholder)
+            highlight: "#ffcc00",   // yellow (placeholder)
+            accent1: "#228b22",     // green (placeholder)
+            accent2: "#ffcc00",     // yellow (placeholder)
+            accent3: "#228b22",     // green (placeholder)
+            accent4: "#ffd700"      // gold (placeholder)
         }
     })
 
-    property string currentTheme: "eww"
+    property string currentTheme: "solarized"
 
     // Current theme colors
     readonly property string background: themes[currentTheme].background
@@ -86,5 +66,5 @@ QtObject {
     readonly property color accent4Color: hexToRgba(accent4)
 
     // Theme names for selector
-    readonly property var themeNames: ["eww", "solarized", "nord", "dracula", "gruvbox"]
+    readonly property var themeNames: ["solarized", "onepiece", "brynas"]
 }
