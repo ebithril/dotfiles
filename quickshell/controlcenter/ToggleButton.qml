@@ -14,14 +14,14 @@ Rectangle {
     implicitHeight: 50
     radius: 25
 
-    color: active ? root.buttonColor : "#2E333F"
+    color: active ? root.buttonColor : Qt.darker(Theme.backgroundColor, 1.2)
     border.width: 2
     border.color: root.buttonColor
 
     Text {
         anchors.centerIn: parent
         text: root.active ? root.activeLabel : root.inactiveLabel
-        color: root.active ? "#2E333F" : root.buttonColor
+        color: root.active ? Theme.backgroundColor : root.buttonColor
         font.pixelSize: 20
     }
 

@@ -12,7 +12,7 @@ RowLayout {
 
     Text {
         text: root.label
-        color: "#E62C39"  // crimson
+        color: Theme.accent1Color
         font.pixelSize: 16
     }
 
@@ -36,12 +36,12 @@ RowLayout {
             width: parent.availableWidth
             height: implicitHeight
             radius: 50
-            color: "#4A4F5B"  // lighter grey
+            color: Qt.darker(Theme.backgroundColor, 1.3)
 
             Rectangle {
                 width: parent.parent.visualPosition * parent.width
                 height: parent.height
-                color: "#E62C39"  // crimson
+                color: Theme.accent1Color
                 radius: 10
             }
         }
@@ -52,7 +52,7 @@ RowLayout {
             implicitWidth: 20
             implicitHeight: 20
             radius: 10
-            color: "#E62C39"  // crimson
+            color: Theme.accent1Color
         }
     }
 }

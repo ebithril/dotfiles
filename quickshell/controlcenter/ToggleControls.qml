@@ -6,7 +6,7 @@ import Quickshell.Io
 
 Rectangle {
     implicitHeight: row.implicitHeight + 10
-    color: "#2E333F"
+    color: Theme.backgroundColor
     radius: 5
 
     property var audioSink: Pipewire.defaultAudioSink
@@ -22,7 +22,7 @@ Rectangle {
             inactiveLabel: ""
             activeLabel: "🔊"
             active: audioSink ? !audioSink.audio.muted : false
-            buttonColor: "#E62C39"  // crimson
+            buttonColor: Theme.accent1Color
             onClicked: {
                 if (audioSink) {
                     audioSink.audio.muted = !audioSink.audio.muted
@@ -36,7 +36,7 @@ Rectangle {
             activeLabel: "󰤨"
             inactiveLabel: "󰤭"
             active: wifiEnabled === "enabled"
-            buttonColor: "#DFC18A"  // gold
+            buttonColor: Theme.accent2Color
             onClicked: {
                 Quickshell.exec("nmcli radio wifi " + (active ? "off" : "on"))
             }
@@ -67,7 +67,7 @@ Rectangle {
             activeLabel: "󰂯"
             inactiveLabel: "󰂲"
             active: btEnabled.includes("Running")
-            buttonColor: "#2f76dc"  // blue
+            buttonColor: Theme.accent3Color
             onClicked: {
                 Quickshell.exec(active ? "systemctl stop bluetooth" : "systemctl start bluetooth")
             }
@@ -98,7 +98,7 @@ Rectangle {
             activeLabel: ""
             inactiveLabel: ""
             active: idleStatus === "0"
-            buttonColor: "#FBC920"  // mango
+            buttonColor: Theme.accent4Color
             onClicked: {
                 Quickshell.exec("~/dotfiles/eww/scripts/toggle-idle")
             }

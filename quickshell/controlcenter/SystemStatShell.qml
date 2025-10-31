@@ -44,7 +44,7 @@ Item {
         radius: 30
         color: "transparent"
         border.width: 5
-        border.color: "#4A4F5B"  // lighter grey
+        border.color: Qt.darker(Theme.backgroundColor, 1.3)
     }
 
     // Progress arc
