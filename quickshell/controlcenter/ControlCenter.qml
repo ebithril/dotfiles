@@ -26,7 +26,12 @@ Scope {
         active: root.shown
 
         PanelWindow {
-            anchors.fill: true
+            anchors {
+                left: true
+                right: true
+                top: true
+                bottom: true
+            }
             color: "transparent"
             exclusiveZone: 0
 
