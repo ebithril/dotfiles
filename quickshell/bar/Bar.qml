@@ -1,6 +1,7 @@
 import "components"
 import "components/workspaces"
 import Quickshell
+import Quickshell.Theme
 import QtQuick
 import QtQuick.Layouts
 

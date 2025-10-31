@@ -1,5 +1,6 @@
 import QtQuick
 import Quickshell
+import Quickshell.Theme
 
 Rectangle {
     id: button

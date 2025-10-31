@@ -1,10 +1,11 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
+import Quickshell.Theme
 
 Rectangle {
     implicitHeight: column.implicitHeight + 20
-    color: "#2E333F"
+    color: Theme.backgroundColor
     radius: 5
 
     ColumnLayout {

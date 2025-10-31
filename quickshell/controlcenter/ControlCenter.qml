@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
+import Quickshell.Theme
 import Quickshell.Services.Pipewire
 import Quickshell.Io
 
