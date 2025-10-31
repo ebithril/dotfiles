@@ -22,7 +22,7 @@ Rectangle {
             inactiveLabel: ""
             activeLabel: "🔊"
             active: audioSink ? !audioSink.audio.muted : false
-            color: "#E62C39"  // crimson
+            buttonColor: "#E62C39"  // crimson
             onClicked: {
                 if (audioSink) {
                     audioSink.audio.muted = !audioSink.audio.muted
@@ -36,7 +36,7 @@ Rectangle {
             activeLabel: "󰤨"
             inactiveLabel: "󰤭"
             active: wifiEnabled === "enabled"
-            color: "#DFC18A"  // gold
+            buttonColor: "#DFC18A"  // gold
             onClicked: {
                 Quickshell.exec("nmcli radio wifi " + (active ? "off" : "on"))
             }
@@ -67,7 +67,7 @@ Rectangle {
             activeLabel: "󰂯"
             inactiveLabel: "󰂲"
             active: btEnabled.includes("Running")
-            color: "#2f76dc"  // blue
+            buttonColor: "#2f76dc"  // blue
             onClicked: {
                 Quickshell.exec(active ? "systemctl stop bluetooth" : "systemctl start bluetooth")
             }
@@ -98,7 +98,7 @@ Rectangle {
             activeLabel: ""
             inactiveLabel: ""
             active: idleStatus === "0"
-            color: "#FBC920"  // mango
+            buttonColor: "#FBC920"  // mango
             onClicked: {
                 Quickshell.exec("~/dotfiles/eww/scripts/toggle-idle")
             }

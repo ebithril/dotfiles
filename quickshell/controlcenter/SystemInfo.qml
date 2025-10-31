@@ -18,28 +18,28 @@ Rectangle {
         SystemStatShell {
             label: ""
             command: ["sh", "-c", "top -bn1 | grep 'Cpu(s)' | awk '{print $2}' | sed 's/%us,//'"]
-            color: "#E62C39"  // crimson
+            statColor: "#E62C39"  // crimson
         }
 
         // RAM
         SystemStatShell {
             label: ""
             command: ["sh", "-c", "free | grep Mem | awk '{print ($3/$2) * 100.0}'"]
-            color: "#DFC18A"  // gold
+            statColor: "#DFC18A"  // gold
         }
 
         // Disk
         SystemStatShell {
             label: "💾"
             command: ["sh", "-c", "df / | tail -1 | awk '{print $5}' | sed 's/%//'"]
-            color: "#2f76dc"  // blue
+            statColor: "#2f76dc"  // blue
         }
 
         // Battery
         SystemStatShell {
             label: "󰁹"
             command: ["sh", "-c", "cat /sys/class/power_supply/BAT*/capacity 2>/dev/null | head -1"]
-            color: "#FBC920"  // mango
+            statColor: "#FBC920"  // mango
             visible: batteryExists
 
             property bool batteryExists: false

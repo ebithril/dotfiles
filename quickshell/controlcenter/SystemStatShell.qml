@@ -5,7 +5,7 @@ import Quickshell.Io
 Item {
     property string label: ""
     property var command: []
-    property color color: "#2f76dc"
+    property color statColor: "#2f76dc"
     property real value: statValue
 
     implicitWidth: 60
@@ -64,7 +64,7 @@ Item {
             ctx.beginPath()
             ctx.arc(centerX, centerY, radius, -Math.PI / 2, -Math.PI / 2 + (value / 100 * 2 * Math.PI), false)
             ctx.lineWidth = 5
-            ctx.strokeStyle = parent.color
+            ctx.strokeStyle = parent.statColor
             ctx.stroke()
         }
 
@@ -82,7 +82,7 @@ Item {
     Text {
         anchors.centerIn: parent
         text: label
-        color: parent.color
+        color: parent.statColor
         font.pixelSize: 20
     }
 }
