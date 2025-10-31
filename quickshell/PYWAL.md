@@ -7,7 +7,9 @@ The quickshell theme system automatically integrates with pywal to generate colo
 When you switch themes in the control center, quickshell automatically:
 1. Changes the wallpaper using hyprpaper
 2. Runs `wal -i <wallpaper_path> -n -q` to generate a colorscheme from the wallpaper
-3. Updates all pywal-compatible applications with the new colors
+3. Reloads kitty terminal (via SIGUSR1 signal)
+4. Reloads hyprland config (via `hyprctl reload`)
+5. Updates all other pywal-compatible applications with the new colors
 
 ## Setup
 
@@ -32,12 +34,15 @@ Place wallpaper images in `~/dotfiles/assets/wallpapers/`:
 
 Make your applications use pywal colors. Common examples:
 
-**Terminal (kitty, alacritty, etc.):**
-Add to your config to source pywal colors:
-```bash
-# In ~/.config/kitty/kitty.conf
-include ~/.cache/wal/colors-kitty.conf
-```
+**✅ Hyprland (Already Configured):**
+Hyprland is already configured to use pywal colors and automatically reloads when themes change.
+- `hypr/hyprland.conf` sources `~/.cache/wal/colors-hyprland.conf`
+- Border colors, background, etc. update automatically
+
+**✅ Kitty Terminal (Already Configured):**
+Kitty is already configured to use pywal colors and automatically reloads when themes change.
+- `kitty/kitty.conf` includes `~/.cache/wal/colors-kitty.conf`
+- Receives SIGUSR1 signal to reload instantly
 
 **Rofi:**
 ```bash
