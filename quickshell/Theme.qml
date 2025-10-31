@@ -45,17 +45,27 @@ Singleton {
 
     property string currentTheme: "solarized"
 
-    // Wallpaper changer
+    // Wallpaper and pywal changer
     onCurrentThemeChanged: {
         var wallpaperPath = themes[currentTheme].wallpaper
         if (wallpaperPath) {
+            // Change wallpaper
             wallpaperProcess.command = ["sh", "-c", "hyprctl hyprpaper reload ,\"" + wallpaperPath + "\""]
             wallpaperProcess.running = true
+
+            // Generate pywal colorscheme from wallpaper
+            pywalProcess.command = ["sh", "-c", "wal -i \"" + wallpaperPath + "\" -n -q"]
+            pywalProcess.running = true
         }
     }
 
     Process {
         id: wallpaperProcess
+        running: false
+    }
+
+    Process {
+        id: pywalProcess
         running: false
     }
 
