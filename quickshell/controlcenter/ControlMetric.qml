@@ -8,7 +8,7 @@ RowLayout {
 
     property string label: ""
     property real value: 0
-    signal valueChanged(real newValue)
+    signal sliderMoved(real newValue)
 
     Text {
         text: root.label
@@ -24,8 +24,8 @@ RowLayout {
         to: 100
         value: root.value
 
-        onValueChanged: {
-            root.valueChanged(value)
+        onMoved: {
+            root.sliderMoved(value)
         }
 
         background: Rectangle {

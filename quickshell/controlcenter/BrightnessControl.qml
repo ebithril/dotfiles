@@ -34,7 +34,7 @@ ControlMetric {
         onTriggered: getBrightness.running = true
     }
 
-    onValueChanged: (newValue) => {
+    onSliderMoved: (newValue) => {
         // Set brightness via brightnessctl
         Quickshell.exec(`brightnessctl set ${Math.round(newValue)}%`)
     }

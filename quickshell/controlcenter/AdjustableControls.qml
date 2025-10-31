@@ -15,7 +15,7 @@ ColumnLayout {
         Layout.fillWidth: true
         label: audioSink && audioSink.audio.muted ? " " : "🔊"
         value: audioSink ? audioSink.audio.volume * 100 : 0
-        onValueChanged: (newValue) => {
+        onSliderMoved: (newValue) => {
             if (audioSink) {
                 audioSink.audio.volume = newValue / 100
             }
