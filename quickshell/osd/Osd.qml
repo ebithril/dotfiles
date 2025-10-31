@@ -53,7 +53,7 @@ Scope {
             Rectangle {
                 anchors.fill: parent
                 radius: height / 2
-                color: "#80000000"
+                color: Qt.rgba(Theme.backgroundColor.r, Theme.backgroundColor.g, Theme.backgroundColor.b, 0.9)
 
                 RowLayout {
                     anchors {
@@ -62,9 +62,10 @@ Scope {
                         rightMargin: 15
                     }
 
-                    IconImage {
-                        implicitSize: 30
-                        source: Quickshell.iconPath("audio-volume-high-symbolic")
+                    Text {
+                        text: "🔊"
+                        font.pixelSize: 24
+                        color: Theme.foregroundColor
                     }
 
                     Rectangle {
@@ -73,7 +74,7 @@ Scope {
 
                         implicitHeight: 10
                         radius: 20
-                        color: "#50ffffff"
+                        color: Qt.rgba(Theme.foregroundColor.r, Theme.foregroundColor.g, Theme.foregroundColor.b, 0.3)
 
                         Rectangle {
                             anchors {
@@ -84,6 +85,7 @@ Scope {
 
                             implicitWidth: parent.width * (Pipewire.defaultAudioSink?.audio.volume ?? 0)
                             radius: parent.radius
+                            color: Theme.accent1Color
                         }
                     }
                 }
