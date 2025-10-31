@@ -1,5 +1,4 @@
 import QtQuick
-import Quickshell.Theme
 
 Text {
     text: Time.time

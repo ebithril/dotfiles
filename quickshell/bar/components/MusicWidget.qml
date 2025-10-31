@@ -1,6 +1,5 @@
 import QtQuick
 import Quickshell
-import Quickshell.Theme
 import Quickshell.Services.Mpris
 
 Item {

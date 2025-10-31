@@ -1,7 +1,6 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
-import Quickshell.Theme
 import Quickshell.Hyprland
 
 RowLayout {
