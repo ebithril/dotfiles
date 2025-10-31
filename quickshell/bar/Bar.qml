@@ -2,6 +2,7 @@ import "components"
 import "components/workspaces"
 import Quickshell
 import QtQuick
+import QtQuick.Layouts
 
 Scope {
     Variants {
@@ -21,43 +22,63 @@ Scope {
             }
 
             implicitHeight: 30
+            color: "transparent"
 
-            Rectangle {
-                id: workspaces
+            // Main container using RowLayout for left-center-right layout
+            RowLayout {
+                anchors.fill: parent
+                spacing: 0
 
-                //anchors.horizontalCenter: parent.horizontalCenter
-                //anchors.top: osIcon.bottom
-                anchors.topMargin: 12
+                // Left side - Workspaces
+                Rectangle {
+                    id: workspaces
 
-                radius: 1000
-                color: "#201F25"
+                    Layout.alignment: Qt.AlignLeft
+                    Layout.leftMargin: 10
 
-                implicitWidth: workspacesInner.implicitWidth + 5 * 2
-                implicitHeight: workspacesInner.implicitHeight + 5 * 2
+                    radius: 1000
+                    color: "#201F25"
 
-                MouseArea {
-                    anchors.fill: parent
-                    anchors.leftMargin: -10
-                    anchors.rightMargin: -10
+                    implicitWidth: workspacesInner.implicitWidth + 5 * 2
+                    implicitHeight: workspacesInner.implicitHeight + 5 * 2
 
-                    function onWheel(event: WheelEvent): void {
-                        const activeWs = Hyprland.activeToplevel?.workspace?.name;
-                        if (activeWs?.startsWith("special:"))
-                            Hyprland.dispatch(`togglespecialworkspace ${activeWs.slice(8)}`);
-                        else if (event.angleDelta.y < 0 || Hyprland.activeWsId > 1)
-                            Hyprland.dispatch(`workspace r${event.angleDelta.y > 0 ? "-" : "+"}1`);
+                    MouseArea {
+                        anchors.fill: parent
+                        anchors.leftMargin: -10
+                        anchors.rightMargin: -10
+
+                        function onWheel(event: WheelEvent): void {
+                            const activeWs = Hyprland.activeToplevel?.workspace?.name;
+                            if (activeWs?.startsWith("special:"))
+                                Hyprland.dispatch(`togglespecialworkspace ${activeWs.slice(8)}`);
+                            else if (event.angleDelta.y < 0 || Hyprland.activeWsId > 1)
+                                Hyprland.dispatch(`workspace r${event.angleDelta.y > 0 ? "-" : "+"}1`);
+                        }
+                    }
+
+                    Workspaces {
+                        id: workspacesInner
+                        anchors.centerIn: parent
                     }
                 }
 
-                Workspaces {
-                    id: workspacesInner
+                // Center - Music player
+                Item {
+                    Layout.fillWidth: true
 
-                    anchors.centerIn: parent
+                    MusicWidget {
+                        anchors.centerIn: parent
+                    }
                 }
-            }
 
-            ClockWidget {
-                anchors.centerIn: parent
+                // Right side - System info and time
+                RowLayout {
+                    Layout.alignment: Qt.AlignRight
+                    Layout.rightMargin: 10
+                    spacing: 15
+
+                    ClockWidget {}
+                }
             }
         }
     }
