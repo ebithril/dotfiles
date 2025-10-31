@@ -1,4 +1,5 @@
 singleton Time Time.qml
+singleton Theme ../../Theme.qml
 ClockWidget 1.0 ClockWidget.qml
 MusicWidget 1.0 MusicWidget.qml
 WorkspacesEwwStyle 1.0 WorkspacesEwwStyle.qml

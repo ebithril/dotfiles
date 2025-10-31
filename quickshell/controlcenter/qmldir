@@ -1,4 +1,5 @@
 singleton Time Time.qml
+singleton Theme ../Theme.qml
 ControlCenter 1.0 ControlCenter.qml
 ThemeSelector 1.0 ThemeSelector.qml
 ToggleControls 1.0 ToggleControls.qml
