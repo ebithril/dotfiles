@@ -1,1 +1,2 @@
 singleton Theme ../Theme.qml
+Osd 1.0 Osd.qml
