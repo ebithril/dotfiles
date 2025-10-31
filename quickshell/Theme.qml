@@ -32,13 +32,13 @@ Singleton {
         },
         "brynas": {
             name: "Brynäs",
-            background: "#1a1a1a",  // dark background (placeholder)
-            foreground: "#e0e0e0",  // light text (placeholder)
-            highlight: "#ffcc00",   // yellow (placeholder)
-            accent1: "#228b22",     // green (placeholder)
-            accent2: "#ffcc00",     // yellow (placeholder)
-            accent3: "#228b22",     // green (placeholder)
-            accent4: "#ffd700",     // gold (placeholder)
+            background: "#0a0a0a",  // black background
+            foreground: "#ffffff",  // white text
+            highlight: "#e30613",   // Brynäs red
+            accent1: "#e30613",     // red
+            accent2: "#ffd700",     // gold
+            accent3: "#e30613",     // red
+            accent4: "#ffc107",     // lighter gold
             wallpaper: "~/dotfiles/assets/wallpapers/brynas.jpg"
         }
     })
