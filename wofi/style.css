@@ -1,14 +1,16 @@
 @import '/home/ebithril/.cache/wal/colors-wofi.css';
 
+@define-color focusColor alpha(@color2, 0.8);
+@define-color backgroundColor alpha(@background, 0.8);
+
 #window {
-    background-color: @background;
-    border: 1px solid @color8;
+    background-color: transparent;
     margin-right: 200px;
 }
  
 #input {
     color: @color1;
-    border: 1px solid @color8;
+    border: 1px solid @focusColor;
     border-radius: 20px; 
  
     margin-left: 100px;
@@ -17,12 +19,12 @@
     margin-bottom: 20px;
  
     box-shadow: none;
-    background-color: @color6;
+    background-color: @backgroundColor;
 }
  
 #input:focus {
     color: @foreground;
-    border: 1px solid @color8;
+    border: 1px solid @focusColor;
  
     margin-left: 10px;
     margin-right: 10px;
@@ -30,26 +32,29 @@
     margin-bottom: 20px;
  
     box-shadow: none;
-    background-color: @background;
+    background-color: @backgroundColor;
 }
  
 #entry {
     font-family: JetBrainsMono;
+    border: 1px solid @focusColor;
     border-radius: 20px;
     margin: 5px;
     margin-right: 20px;
     margin-left: 20px;
     padding-left: 10px;
-    color: @color6;
+    color: @foreground;
+    background: @backgroundColor;
 }
  
 #entry:focus {
-    background: @background;
-    border: 1px solid @color8;
-    color: @foreground;
+    background: @backgroundColor;
+    border: 1px solid @focusColor;
+    color: lighter(@foreground);
 }
 
 #entry:selected {
-    background: @background;
-    border: 1px solid @color5;
+    background: @focusColor;
+    border: 1px solid @focusColor;
+    color: lighter(@foreground);
 }
