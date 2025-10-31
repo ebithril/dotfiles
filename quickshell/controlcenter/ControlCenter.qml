@@ -21,27 +21,6 @@ Scope {
         }
     }
 
-    // Transparent overlay to catch outside clicks
-    LazyLoader {
-        active: root.shown
-
-        PanelWindow {
-            anchors {
-                left: true
-                right: true
-                top: true
-                bottom: true
-            }
-            color: "transparent"
-            exclusiveZone: 0
-
-            MouseArea {
-                anchors.fill: parent
-                onPressed: root.shown = false
-            }
-        }
-    }
-
     // Control center panel
     LazyLoader {
         active: root.shown
