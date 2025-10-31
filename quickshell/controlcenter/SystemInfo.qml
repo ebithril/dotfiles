@@ -1,16 +1,12 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
-import Quickshell.Services.SystemStats
-import Quickshell.Services.UPower
 import Quickshell.Io
 
 Rectangle {
     implicitHeight: row.implicitHeight + 10
     color: "#2E333F"
     radius: 5
-
-    property var battery: UPower.displayDevice
 
     RowLayout {
         id: row
@@ -19,52 +15,44 @@ Rectangle {
         spacing: 10
 
         // CPU
-        SystemStat {
+        SystemStatShell {
             label: ""
-            value: SystemStats.cpuUsage
+            command: ["sh", "-c", "top -bn1 | grep 'Cpu(s)' | awk '{print $2}' | sed 's/%us,//'"]
             color: "#E62C39"  // crimson
         }
 
         // RAM
-        SystemStat {
+        SystemStatShell {
             label: ""
-            value: SystemStats.memoryUsage * 100
+            command: ["sh", "-c", "free | grep Mem | awk '{print ($3/$2) * 100.0}'"]
             color: "#DFC18A"  // gold
         }
 
         // Disk
-        SystemStat {
-            id: diskStat
+        SystemStatShell {
             label: "💾"
-            value: diskUsage
+            command: ["sh", "-c", "df / | tail -1 | awk '{print $5}' | sed 's/%//'"]
             color: "#2f76dc"  // blue
-
-            property real diskUsage: 0
-
-            Process {
-                id: diskProc
-                command: ["sh", "-c", "df / | tail -1 | awk '{print $5}' | sed 's/%//'"]
-                running: true
-
-                stdout: StdioCollector {
-                    onStreamFinished: diskStat.diskUsage = parseFloat(this.text.trim())
-                }
-            }
-
-            Timer {
-                interval: 5000
-                running: true
-                repeat: true
-                onTriggered: diskProc.running = true
-            }
         }
 
         // Battery
-        SystemStat {
-            visible: battery && battery.isPresent
+        SystemStatShell {
             label: "󰁹"
-            value: battery ? battery.percentage : 0
+            command: ["sh", "-c", "cat /sys/class/power_supply/BAT*/capacity 2>/dev/null | head -1"]
             color: "#FBC920"  // mango
+            visible: batteryExists
+
+            property bool batteryExists: false
+
+            Process {
+                id: checkBattery
+                command: ["sh", "-c", "test -e /sys/class/power_supply/BAT0 && echo 1 || echo 0"]
+                running: true
+
+                stdout: StdioCollector {
+                    onStreamFinished: parent.batteryExists = this.text.trim() === "1"
+                }
+            }
         }
     }
 }

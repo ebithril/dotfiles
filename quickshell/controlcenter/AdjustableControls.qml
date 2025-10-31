@@ -3,13 +3,12 @@ import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell
 import Quickshell.Services.Pipewire
-import Quickshell.Services.Backlight
+import Quickshell.Io
 
 ColumnLayout {
     spacing: 10
 
     property var audioSink: Pipewire.defaultAudioSink
-    property var backlight: Backlight.devices[0]
 
     // Volume Control
     ControlMetric {
@@ -24,15 +23,7 @@ ColumnLayout {
     }
 
     // Brightness Control
-    ControlMetric {
+    BrightnessControl {
         Layout.fillWidth: true
-        visible: backlight !== null
-        label: "󰃠 "
-        value: backlight ? backlight.brightness * 100 : 0
-        onValueChanged: (newValue) => {
-            if (backlight) {
-                backlight.brightness = newValue / 100
-            }
-        }
     }
 }

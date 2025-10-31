@@ -2,9 +2,6 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Services.Pipewire
-import Quickshell.Services.SystemStats
-import Quickshell.Services.Backlight
-import Quickshell.Services.UPower
 import Quickshell.Io
 
 LazyLoader {
