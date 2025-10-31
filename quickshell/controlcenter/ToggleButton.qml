@@ -14,7 +14,7 @@ Rectangle {
     implicitHeight: 50
     radius: 25
 
-    color: active ? root.buttonColor : Qt.darker(Theme.backgroundColor, 1.2)
+    color: active ? root.buttonColor : Qt.lighter(Theme.backgroundColor, 1.2)
     border.width: 2
     border.color: root.buttonColor
 

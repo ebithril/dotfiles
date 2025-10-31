@@ -56,7 +56,7 @@ LazyLoader {
                 Rectangle {
                     Layout.fillWidth: true
                     Layout.preferredHeight: childrenRect.height + 20
-                    color: Qt.darker(Theme.backgroundColor, 1.2)
+                    color: Qt.lighter(Theme.backgroundColor, 1.2)
                     radius: 10
 
                     ColumnLayout {

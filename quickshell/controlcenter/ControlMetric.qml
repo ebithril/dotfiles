@@ -36,7 +36,7 @@ RowLayout {
             width: parent.availableWidth
             height: implicitHeight
             radius: 50
-            color: Qt.darker(Theme.backgroundColor, 1.3)
+            color: Qt.lighter(Theme.backgroundColor, 1.5)
 
             Rectangle {
                 width: parent.parent.visualPosition * parent.width
