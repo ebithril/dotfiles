@@ -4,95 +4,123 @@ import Quickshell
 import Quickshell.Services.Pipewire
 import Quickshell.Io
 
-LazyLoader {
+Scope {
     id: root
     property bool shown: false
-    active: shown
 
-    PanelWindow {
-        anchors {
-            right: true
-            top: true
-        }
+    // File watcher for keyboard shortcut toggle
+    Process {
+        id: toggleWatcher
+        command: ["sh", "-c", "inotifywait -m -e modify,create /tmp/quickshell-control-center-toggle 2>/dev/null"]
+        running: true
 
-        margins {
-            right: 2
-            top: 5
-        }
-
-        width: 300
-        height: screen.height - 10
-        color: "transparent"
-        exclusiveZone: 0
-
-        mask: Region { item: bg }
-
-        Rectangle {
-            id: bg
-            anchors.fill: parent
-            color: Theme.backgroundColor
-            radius: 10
-
-            ColumnLayout {
-                anchors.fill: parent
-                anchors.margins: 10
-                spacing: 10
-
-                // Header - Time
-                Text {
-                    Layout.fillWidth: true
-                    text: Time.time
-                    color: Theme.foregroundColor
-                    font.pixelSize: 14
-                    font.family: "FiraCode"
-                }
-
-                // Theme Selector
-                ThemeSelector {
-                    Layout.fillWidth: true
-                }
-
-                // Control Card
-                Rectangle {
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: childrenRect.height + 20
-                    color: Qt.lighter(Theme.backgroundColor, 1.2)
-                    radius: 10
-
-                    ColumnLayout {
-                        anchors.fill: parent
-                        anchors.margins: 10
-                        spacing: 10
-
-                        // Toggle Controls
-                        ToggleControls {
-                            Layout.fillWidth: true
-                        }
-
-                        // Volume and Brightness Sliders
-                        AdjustableControls {
-                            Layout.fillWidth: true
-                        }
-
-                        // System Info
-                        SystemInfo {
-                            Layout.fillWidth: true
-                        }
-                    }
-                }
-
-                // Spacer
-                Item {
-                    Layout.fillHeight: true
-                }
+        stdout: SplitParser {
+            onRead: item => {
+                root.shown = !root.shown
             }
         }
+    }
 
-        // Click outside to close
-        MouseArea {
-            anchors.fill: parent
-            z: -1
-            onPressed: root.shown = false
+    // Transparent overlay to catch outside clicks
+    LazyLoader {
+        active: root.shown
+
+        PanelWindow {
+            anchors.fill: true
+            color: "transparent"
+            exclusiveZone: 0
+            layer: Quickshell.Layer.Overlay
+
+            MouseArea {
+                anchors.fill: parent
+                onPressed: root.shown = false
+            }
+        }
+    }
+
+    // Control center panel
+    LazyLoader {
+        active: root.shown
+
+        PanelWindow {
+            anchors {
+                right: true
+                top: true
+            }
+
+            margins {
+                right: 2
+                top: 5
+            }
+
+            width: 300
+            height: screen.height - 10
+            color: "transparent"
+            exclusiveZone: 0
+            layer: Quickshell.Layer.Overlay
+
+            mask: Region { item: bg }
+
+            Rectangle {
+                id: bg
+                anchors.fill: parent
+                color: Theme.backgroundColor
+                radius: 10
+
+                ColumnLayout {
+                    anchors.fill: parent
+                    anchors.margins: 10
+                    spacing: 10
+
+                    // Header - Time
+                    Text {
+                        Layout.fillWidth: true
+                        text: Time.time
+                        color: Theme.foregroundColor
+                        font.pixelSize: 14
+                        font.family: "FiraCode"
+                    }
+
+                    // Theme Selector
+                    ThemeSelector {
+                        Layout.fillWidth: true
+                    }
+
+                    // Control Card
+                    Rectangle {
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: childrenRect.height + 20
+                        color: Qt.lighter(Theme.backgroundColor, 1.2)
+                        radius: 10
+
+                        ColumnLayout {
+                            anchors.fill: parent
+                            anchors.margins: 10
+                            spacing: 10
+
+                            // Toggle Controls
+                            ToggleControls {
+                                Layout.fillWidth: true
+                            }
+
+                            // Volume and Brightness Sliders
+                            AdjustableControls {
+                                Layout.fillWidth: true
+                            }
+
+                            // System Info
+                            SystemInfo {
+                                Layout.fillWidth: true
+                            }
+                        }
+                    }
+
+                    // Spacer
+                    Item {
+                        Layout.fillHeight: true
+                    }
+                }
+            }
         }
     }
 }
