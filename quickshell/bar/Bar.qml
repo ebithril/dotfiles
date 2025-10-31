@@ -5,6 +5,8 @@ import QtQuick
 import QtQuick.Layouts
 
 Scope {
+    id: barScope
+
     // Property to track control center state
     property bool controlCenterShown: false
 
@@ -82,8 +84,8 @@ Scope {
                             spacing: 15
 
                             ControlCenterButton {
-                                controlCenterShown: parent.parent.parent.parent.parent.parent.controlCenterShown
-                                onClicked: parent.parent.parent.parent.parent.parent.toggleControlCenter()
+                                controlCenterShown: barScope.controlCenterShown
+                                onClicked: barScope.toggleControlCenter()
                             }
 
                             ClockWidget {

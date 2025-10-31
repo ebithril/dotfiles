@@ -7,15 +7,15 @@ RowLayout {
     spacing: 15
 
     property var workspaceIcons: [
-        {"id": 1, "icon": ""},
-        {"id": 2, "icon": ""},
-        {"id": 3, "icon": ""},
-        {"id": 4, "icon": ""},
-        {"id": 5, "icon": ""},
-        {"id": 6, "icon": ""},
-        {"id": 7, "icon": ""},
-        {"id": 8, "icon": ""},
-        {"id": 9, "icon": ""}
+        {"id": 1, "icon": "1"},  // Temporarily use numbers
+        {"id": 2, "icon": "2"},
+        {"id": 3, "icon": "3"},
+        {"id": 4, "icon": "4"},
+        {"id": 5, "icon": "5"},
+        {"id": 6, "icon": "6"},
+        {"id": 7, "icon": "7"},
+        {"id": 8, "icon": "8"},
+        {"id": 9, "icon": "9"}
     ]
 
     Repeater {
@@ -40,6 +40,15 @@ RowLayout {
                 font.pixelSize: 14
                 font.family: "FiraCode"
                 font.bold: parent.isActive
+
+                // Debug border
+                Rectangle {
+                    anchors.fill: parent
+                    color: "transparent"
+                    border.color: "red"
+                    border.width: 1
+                    z: -1
+                }
 
                 Behavior on color {
                     ColorAnimation { duration: 150 }
