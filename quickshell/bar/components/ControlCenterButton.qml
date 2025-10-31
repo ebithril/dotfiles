@@ -14,8 +14,8 @@ Rectangle {
     Text {
         id: label
         anchors.centerIn: parent
-        text: controlCenterShown ? "" : ""
-        color: "#B9EFF8"
+        text: controlCenterShown ? "✕" : "⚙"
+        color: Qt.rgba(0.725, 0.937, 0.973, 1.0)  // cyan
         font.pixelSize: 14
         font.family: "FiraCode"
 
@@ -34,7 +34,7 @@ Rectangle {
         onClicked: button.clicked()
         hoverEnabled: true
 
-        onEntered: label.color = "#2f76dc"
-        onExited: label.color = "#B9EFF8"
+        onEntered: label.color = Qt.rgba(0.184, 0.467, 0.867, 1.0)  // blue
+        onExited: label.color = Qt.rgba(0.725, 0.937, 0.973, 1.0)   // cyan
     }
 }

@@ -33,9 +33,10 @@ RowLayout {
             color: "transparent"
 
             Text {
+                id: wsText
                 anchors.centerIn: parent
-                text: wsIcon
-                color: parent.isActive ? "#2f76dc" : "#B9EFF8"  // blue highlight or cyan
+                text: parent.wsIcon
+                color: parent.isActive ? Qt.rgba(0.184, 0.467, 0.867, 1.0) : Qt.rgba(0.725, 0.937, 0.973, 1.0)  // blue or cyan
                 font.pixelSize: 14
                 font.family: "FiraCode"
                 font.bold: parent.isActive
@@ -53,7 +54,7 @@ RowLayout {
                 }
                 width: parent.width - 4
                 height: 2
-                color: "#2f76dc"
+                color: Qt.rgba(0.184, 0.467, 0.867, 1.0)  // blue
                 visible: parent.isActive
                 radius: 1
 
@@ -65,7 +66,7 @@ RowLayout {
             MouseArea {
                 anchors.fill: parent
                 cursorShape: Qt.PointingHandCursor
-                onClicked: Hyprland.dispatch(`workspace ${wsId}`)
+                onClicked: Hyprland.dispatch(`workspace ${parent.wsId}`)
             }
         }
     }
