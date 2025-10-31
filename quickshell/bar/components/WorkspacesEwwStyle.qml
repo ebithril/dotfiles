@@ -25,6 +25,7 @@ RowLayout {
             required property var modelData
             property int wsId: modelData.id
             property string wsIcon: modelData.icon
+            property bool isActive: Hyprland.focusedWorkspace && Hyprland.focusedWorkspace.id === wsId
 
             Layout.preferredWidth: 30
             Layout.preferredHeight: 20
@@ -34,12 +35,30 @@ RowLayout {
             Text {
                 anchors.centerIn: parent
                 text: wsIcon
-                color: Hyprland.focusedWorkspace?.id === wsId ? "#2f76dc" : "#B9EFF8"  // blue highlight or cyan
+                color: parent.isActive ? "#2f76dc" : "#B9EFF8"  // blue highlight or cyan
                 font.pixelSize: 14
                 font.family: "FiraCode"
+                font.bold: parent.isActive
 
                 Behavior on color {
                     ColorAnimation { duration: 150 }
+                }
+            }
+
+            // Underline for active workspace
+            Rectangle {
+                anchors {
+                    bottom: parent.bottom
+                    horizontalCenter: parent.horizontalCenter
+                }
+                width: parent.width - 4
+                height: 2
+                color: "#2f76dc"
+                visible: parent.isActive
+                radius: 1
+
+                Behavior on visible {
+                    NumberAnimation { duration: 150 }
                 }
             }
 

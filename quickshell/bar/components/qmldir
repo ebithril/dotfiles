@@ -2,6 +2,7 @@ singleton Time Time.qml
 ClockWidget 1.0 ClockWidget.qml
 MusicWidget 1.0 MusicWidget.qml
 WorkspacesEwwStyle 1.0 WorkspacesEwwStyle.qml
+ControlCenterButton 1.0 ControlCenterButton.qml
 AudioWidget 1.0 AudioWidget.qml
 BacklightWidget 1.0 BacklightWidget.qml
 BatteryWidget 1.0 BatteryWidget.qml

@@ -5,6 +5,12 @@ import QtQuick
 import QtQuick.Layouts
 
 Scope {
+    // Property to track control center state
+    property bool controlCenterShown: false
+
+    // Signal to toggle control center
+    signal toggleControlCenter()
+
     Variants {
         model: Quickshell.screens
         PanelWindow {
@@ -62,17 +68,27 @@ Scope {
                         }
                     }
 
-                    // Right side - Time
+                    // Right side - Control center button and time
                     Rectangle {
                         Layout.alignment: Qt.AlignRight
                         Layout.rightMargin: 0
                         color: "#2E333F"
-                        implicitWidth: timeWidget.implicitWidth + 20
+                        implicitWidth: rightContent.implicitWidth + 20
                         implicitHeight: parent.height
 
-                        ClockWidget {
-                            id: timeWidget
+                        RowLayout {
+                            id: rightContent
                             anchors.centerIn: parent
+                            spacing: 15
+
+                            ControlCenterButton {
+                                controlCenterShown: parent.parent.parent.parent.parent.parent.controlCenterShown
+                                onClicked: parent.parent.parent.parent.parent.parent.toggleControlCenter()
+                            }
+
+                            ClockWidget {
+                                id: timeWidget
+                            }
                         }
                     }
                 }
