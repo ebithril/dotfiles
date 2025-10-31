@@ -30,7 +30,7 @@ LazyLoader {
         Rectangle {
             id: bg
             anchors.fill: parent
-            color: "#2E333F"
+            color: Theme.backgroundColor
             radius: 10
 
             ColumnLayout {
@@ -42,16 +42,21 @@ LazyLoader {
                 Text {
                     Layout.fillWidth: true
                     text: Time.time
-                    color: "#B9EFF8"
+                    color: Theme.foregroundColor
                     font.pixelSize: 14
                     font.family: "FiraCode"
+                }
+
+                // Theme Selector
+                ThemeSelector {
+                    Layout.fillWidth: true
                 }
 
                 // Control Card
                 Rectangle {
                     Layout.fillWidth: true
                     Layout.preferredHeight: childrenRect.height + 20
-                    color: "#3A3F4B"
+                    color: Qt.darker(Theme.backgroundColor, 1.2)
                     radius: 10
 
                     ColumnLayout {

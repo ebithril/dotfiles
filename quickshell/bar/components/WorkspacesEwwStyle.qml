@@ -38,7 +38,7 @@ RowLayout {
                 id: wsText
                 anchors.centerIn: parent
                 text: parent.wsIcon
-                color: parent.isActive ? Qt.rgba(0.184, 0.467, 0.867, 1.0) : Qt.rgba(0.725, 0.937, 0.973, 1.0)  // blue or cyan
+                color: parent.isActive ? Theme.highlightColor : Theme.foregroundColor
                 font.pixelSize: 10
                 font.bold: parent.isActive
 
@@ -62,7 +62,7 @@ RowLayout {
                 }
                 width: parent.width - 4
                 height: 2
-                color: Qt.rgba(0.184, 0.467, 0.867, 1.0)  // blue
+                color: Theme.highlightColor
                 visible: parent.isActive
                 radius: 1
 

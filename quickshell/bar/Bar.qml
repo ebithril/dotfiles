@@ -31,7 +31,7 @@ Scope {
             // Background bar
             Rectangle {
                 anchors.fill: parent
-                color: "#2E333F"  // eww grey background
+                color: Theme.backgroundColor
 
                 // Main layout - left, center, right
                 RowLayout {
@@ -42,7 +42,7 @@ Scope {
                     Rectangle {
                         Layout.alignment: Qt.AlignLeft
                         Layout.leftMargin: 0
-                        color: "#2E333F"
+                        color: Theme.backgroundColor
 
                         implicitWidth: workspacesInner.implicitWidth + 20
                         implicitHeight: parent.height
@@ -59,7 +59,7 @@ Scope {
 
                         Rectangle {
                             anchors.centerIn: parent
-                            color: "#2E333F"
+                            color: Theme.backgroundColor
                             implicitWidth: musicWidget.implicitWidth
                             implicitHeight: parent.height
 
@@ -74,7 +74,7 @@ Scope {
                     Rectangle {
                         Layout.alignment: Qt.AlignRight
                         Layout.rightMargin: 0
-                        color: "#2E333F"
+                        color: Theme.backgroundColor
                         implicitWidth: rightContent.implicitWidth + 20
                         implicitHeight: parent.height
 

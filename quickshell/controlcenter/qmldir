@@ -1,5 +1,6 @@
 singleton Time Time.qml
 ControlCenter 1.0 ControlCenter.qml
+ThemeSelector 1.0 ThemeSelector.qml
 ToggleControls 1.0 ToggleControls.qml
 ToggleButton 1.0 ToggleButton.qml
 AdjustableControls 1.0 AdjustableControls.qml
