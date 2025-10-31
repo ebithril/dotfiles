@@ -21,13 +21,13 @@ Singleton {
         },
         "onepiece": {
             name: "One Piece",
-            background: "#1a1a2e",  // dark navy (placeholder)
-            foreground: "#eee",     // light text (placeholder)
-            highlight: "#dc143c",   // crimson red for Luffy (placeholder)
-            accent1: "#dc143c",     // red (placeholder)
-            accent2: "#ffd700",     // straw hat gold (placeholder)
-            accent3: "#4169e1",     // ocean blue (placeholder)
-            accent4: "#ff6347",     // orange-red (placeholder)
+            background: "#2E333F",  // Crayola's Outer Space
+            foreground: "#B9EFF8",  // Diamond
+            highlight: "#2F76DC",   // Celtic Blue
+            accent1: "#E62C39",     // Alizarin Crimson
+            accent2: "#DFC18A",     // Crayola's Gold
+            accent3: "#2F76DC",     // Celtic Blue
+            accent4: "#FBC920",     // Ripe Mango
             wallpaper: "~/dotfiles/assets/wallpapers/onepiece.jpg"
         },
         "brynas": {
