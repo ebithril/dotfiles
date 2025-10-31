@@ -19,7 +19,7 @@ Rectangle {
 
         // Volume Mute Toggle
         ToggleButton {
-            inactiveLabel: ""
+            inactiveLabel: "🔇"
             activeLabel: "🔊"
             active: audioSink ? !audioSink.audio.muted : false
             buttonColor: Theme.accent1Color
@@ -33,8 +33,8 @@ Rectangle {
         // WiFi Toggle
         ToggleButton {
             id: wifiToggle
-            activeLabel: "󰤨"
-            inactiveLabel: "󰤭"
+            activeLabel: "📶"
+            inactiveLabel: "📵"
             active: wifiEnabled === "enabled"
             buttonColor: Theme.accent2Color
             onClicked: {
@@ -64,8 +64,8 @@ Rectangle {
         // Bluetooth Toggle
         ToggleButton {
             id: btToggle
-            activeLabel: "󰂯"
-            inactiveLabel: "󰂲"
+            activeLabel: "🔵"
+            inactiveLabel: "⚫"
             active: btEnabled.includes("Running")
             buttonColor: Theme.accent3Color
             onClicked: {
@@ -95,8 +95,8 @@ Rectangle {
         // Idle Inhibit Toggle
         ToggleButton {
             id: idleToggle
-            activeLabel: ""
-            inactiveLabel: ""
+            activeLabel: "☕"
+            inactiveLabel: "💤"
             active: idleStatus === "0"
             buttonColor: Theme.accent4Color
             onClicked: {

@@ -13,7 +13,7 @@ ColumnLayout {
     // Volume Control
     ControlMetric {
         Layout.fillWidth: true
-        label: audioSink && audioSink.audio.muted ? " " : "🔊"
+        label: audioSink && audioSink.audio.muted ? "🔇" : "🔊"
         value: audioSink ? audioSink.audio.volume * 100 : 0
         onSliderMoved: (newValue) => {
             if (audioSink) {
