@@ -1,5 +1,7 @@
 pragma Singleton
 import QtQuick
+import Quickshell
+import Quickshell.Io
 
 QtObject {
     id: root
@@ -14,7 +16,8 @@ QtObject {
             accent1: "#dc322f",  // crimson
             accent2: "#b58900",  // gold
             accent3: "#268bd2",  // blue
-            accent4: "#cb4b16"   // orange
+            accent4: "#cb4b16",  // orange
+            wallpaper: "~/dotfiles/assets/wallpapers/solarized.jpg"
         },
         "onepiece": {
             name: "One Piece",
@@ -24,7 +27,8 @@ QtObject {
             accent1: "#dc143c",     // red (placeholder)
             accent2: "#ffd700",     // straw hat gold (placeholder)
             accent3: "#4169e1",     // ocean blue (placeholder)
-            accent4: "#ff6347"      // orange-red (placeholder)
+            accent4: "#ff6347",     // orange-red (placeholder)
+            wallpaper: "~/dotfiles/assets/wallpapers/onepiece.jpg"
         },
         "brynas": {
             name: "Brynäs",
@@ -34,11 +38,26 @@ QtObject {
             accent1: "#228b22",     // green (placeholder)
             accent2: "#ffcc00",     // yellow (placeholder)
             accent3: "#228b22",     // green (placeholder)
-            accent4: "#ffd700"      // gold (placeholder)
+            accent4: "#ffd700",     // gold (placeholder)
+            wallpaper: "~/dotfiles/assets/wallpapers/brynas.jpg"
         }
     })
 
     property string currentTheme: "solarized"
+
+    // Wallpaper changer
+    onCurrentThemeChanged: {
+        var wallpaperPath = themes[currentTheme].wallpaper
+        if (wallpaperPath) {
+            wallpaperProcess.command = ["sh", "-c", "hyprctl hyprpaper reload ,\"" + wallpaperPath + "\""]
+            wallpaperProcess.running = true
+        }
+    }
+
+    Process {
+        id: wallpaperProcess
+        running: false
+    }
 
     // Current theme colors
     readonly property string background: themes[currentTheme].background
