@@ -8,54 +8,72 @@ Singleton {
 
     // Available themes
     readonly property var themes: ({
-        "solarized": {
-            name: "Solarized Dark",
-            background: "#002b36",
-            foreground: "#839496",
-            highlight: "#268bd2",
-            accent1: "#dc322f",  // crimson
-            accent2: "#b58900",  // gold
-            accent3: "#268bd2",  // blue
-            accent4: "#cb4b16",  // orange
-            wallpaper: "~/dotfiles/assets/wallpapers/solarized.jpg"
-        },
-        "onepiece": {
-            name: "One Piece",
-            background: "#2E333F",  // Crayola's Outer Space
-            foreground: "#B9EFF8",  // Diamond
-            highlight: "#2F76DC",   // Celtic Blue
-            accent1: "#E62C39",     // Alizarin Crimson
-            accent2: "#DFC18A",     // Crayola's Gold
-            accent3: "#2F76DC",     // Celtic Blue
-            accent4: "#FBC920",     // Ripe Mango
-            wallpaper: "~/dotfiles/assets/wallpapers/onepiece.jpg"
-        },
-        "brynas": {
-            name: "Brynäs",
-            background: "#0a0a0a",  // black background
-            foreground: "#ffffff",  // white text
-            highlight: "#e30613",   // Brynäs red
-            accent1: "#e30613",     // red
-            accent2: "#ffd700",     // gold
-            accent3: "#e30613",     // red
-            accent4: "#ffc107",     // lighter gold
-            wallpaper: "~/dotfiles/assets/wallpapers/brynas.jpg"
-        }
-    })
+            "solarized": {
+                name: "Solarized Dark",
+                background: "#002b36",
+                foreground: "#839496",
+                highlight: "#268bd2",
+                accent1: "#dc322f"  // crimson
+                ,
+                accent2: "#b58900"  // gold
+                ,
+                accent3: "#268bd2"  // blue
+                ,
+                accent4: "#cb4b16"  // orange
+                ,
+                wallpaper: "$HOME/dotfiles/assets/wallpapers/solarized.jpg"
+            },
+            "onepiece": {
+                name: "One Piece",
+                background: "#2E333F"  // Crayola's Outer Space
+                ,
+                foreground: "#B9EFF8"  // Diamond
+                ,
+                highlight: "#2F76DC"   // Celtic Blue
+                ,
+                accent1: "#E62C39"     // Alizarin Crimson
+                ,
+                accent2: "#DFC18A"     // Crayola's Gold
+                ,
+                accent3: "#2F76DC"     // Celtic Blue
+                ,
+                accent4: "#FBC920"     // Ripe Mango
+                ,
+                wallpaper: "$HOME/dotfiles/assets/wallpapers/onepiece.jpg"
+            },
+            "brynas": {
+                name: "Brynäs",
+                background: "#0a0a0a"  // black background
+                ,
+                foreground: "#ffffff"  // white text
+                ,
+                highlight: "#e30613"   // Brynäs red
+                ,
+                accent1: "#e30613"     // red
+                ,
+                accent2: "#ffd700"     // gold
+                ,
+                accent3: "#e30613"     // red
+                ,
+                accent4: "#ffc107"     // lighter gold
+                ,
+                wallpaper: "$HOME/dotfiles/assets/wallpapers/brynas.webp"
+            }
+        })
 
     property string currentTheme: "solarized"
 
     // Wallpaper and pywal changer
     onCurrentThemeChanged: {
-        var wallpaperPath = themes[currentTheme].wallpaper
+        var wallpaperPath = themes[currentTheme].wallpaper;
         if (wallpaperPath) {
             // Change wallpaper
-            wallpaperProcess.command = ["sh", "-c", "hyprctl hyprpaper reload ,\"" + wallpaperPath + "\""]
-            wallpaperProcess.running = true
+            wallpaperProcess.command = ["sh", "-c", "hyprctl hyprpaper reload ,\"" + wallpaperPath + "\""];
+            wallpaperProcess.running = true;
 
             // Apply pywal theme (using predefined colorscheme) and reload apps
-            pywalProcess.command = ["sh", "-c", "wal --theme " + currentTheme + " -n -q && killall -SIGUSR1 kitty && hyprctl reload"]
-            pywalProcess.running = true
+            pywalProcess.command = ["sh", "-c", "wal --theme " + currentTheme + " -n -q && killall -SIGUSR1 kitty && hyprctl reload"];
+            pywalProcess.running = true;
         }
     }
 
@@ -80,10 +98,10 @@ Singleton {
 
     // Convert hex to Qt.rgba
     function hexToRgba(hex) {
-        var r = parseInt(hex.substring(1, 3), 16) / 255
-        var g = parseInt(hex.substring(3, 5), 16) / 255
-        var b = parseInt(hex.substring(5, 7), 16) / 255
-        return Qt.rgba(r, g, b, 1.0)
+        var r = parseInt(hex.substring(1, 3), 16) / 255;
+        var g = parseInt(hex.substring(3, 5), 16) / 255;
+        var b = parseInt(hex.substring(5, 7), 16) / 255;
+        return Qt.rgba(r, g, b, 1.0);
     }
 
     readonly property color backgroundColor: hexToRgba(background)
