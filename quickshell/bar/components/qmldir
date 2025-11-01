@@ -1,0 +1,15 @@
+singleton Time Time.qml
+singleton Theme ../../Theme.qml
+ClockWidget 1.0 ClockWidget.qml
+MusicWidget 1.0 MusicWidget.qml
+WorkspacesEwwStyle 1.0 WorkspacesEwwStyle.qml
+ControlCenterButton 1.0 ControlCenterButton.qml
+AudioWidget 1.0 AudioWidget.qml
+BacklightWidget 1.0 BacklightWidget.qml
+BatteryWidget 1.0 BatteryWidget.qml
+CpuWidget 1.0 CpuWidget.qml
+MemoryWidget 1.0 MemoryWidget.qml
+NetworkWidget 1.0 NetworkWidget.qml
+SystemTray 1.0 SystemTray.qml
+TemperatureWidget 1.0 TemperatureWidget.qml
+WindowTitle 1.0 WindowTitle.qml

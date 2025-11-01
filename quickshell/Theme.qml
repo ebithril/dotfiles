@@ -1,0 +1,117 @@
+pragma Singleton
+import QtQuick
+import Quickshell
+import Quickshell.Io
+
+Singleton {
+    id: root
+
+    // Available themes
+    readonly property var themes: ({
+            "solarized": {
+                name: "Solarized Dark",
+                background: "#002b36",
+                foreground: "#839496",
+                highlight: "#268bd2",
+                accent1: "#dc322f"  // crimson
+                ,
+                accent2: "#b58900"  // gold
+                ,
+                accent3: "#268bd2"  // blue
+                ,
+                accent4: "#cb4b16"  // orange
+                ,
+                wallpaper: "$HOME/dotfiles/assets/wallpapers/solarized.jpg"
+            },
+            "onepiece": {
+                name: "One Piece",
+                background: "#2E333F"  // Crayola's Outer Space
+                ,
+                foreground: "#B9EFF8"  // Diamond
+                ,
+                highlight: "#2F76DC"   // Celtic Blue
+                ,
+                accent1: "#E62C39"     // Alizarin Crimson
+                ,
+                accent2: "#DFC18A"     // Crayola's Gold
+                ,
+                accent3: "#2F76DC"     // Celtic Blue
+                ,
+                accent4: "#FBC920"     // Ripe Mango
+                ,
+                wallpaper: "$HOME/dotfiles/assets/wallpapers/onepiece.jpg"
+            },
+            "brynas": {
+                name: "Brynäs",
+                background: "#0a0a0a"  // black background
+                ,
+                foreground: "#ffffff"  // white text
+                ,
+                highlight: "#e30613"   // Brynäs red
+                ,
+                accent1: "#e30613"     // red
+                ,
+                accent2: "#ffd700"     // gold
+                ,
+                accent3: "#e30613"     // red
+                ,
+                accent4: "#ffc107"     // lighter gold
+                ,
+                wallpaper: "$HOME/dotfiles/assets/wallpapers/brynas.webp"
+            }
+        })
+
+    property string currentTheme: "solarized"
+
+    // Wallpaper and pywal changer
+    onCurrentThemeChanged: {
+        var wallpaperPath = themes[currentTheme].wallpaper;
+        if (wallpaperPath) {
+            // Change wallpaper
+            wallpaperProcess.command = ["sh", "-c", "hyprctl hyprpaper reload ,\"" + wallpaperPath + "\""];
+            wallpaperProcess.running = true;
+
+            // Apply pywal theme (using predefined colorscheme) and reload apps
+            pywalProcess.command = ["sh", "-c", "wal --theme " + currentTheme + " -n -q && killall -SIGUSR1 kitty && hyprctl reload"];
+            pywalProcess.running = true;
+        }
+    }
+
+    Process {
+        id: wallpaperProcess
+        running: false
+    }
+
+    Process {
+        id: pywalProcess
+        running: false
+    }
+
+    // Current theme colors
+    readonly property string background: themes[currentTheme].background
+    readonly property string foreground: themes[currentTheme].foreground
+    readonly property string highlight: themes[currentTheme].highlight
+    readonly property string accent1: themes[currentTheme].accent1
+    readonly property string accent2: themes[currentTheme].accent2
+    readonly property string accent3: themes[currentTheme].accent3
+    readonly property string accent4: themes[currentTheme].accent4
+
+    // Convert hex to Qt.rgba
+    function hexToRgba(hex) {
+        var r = parseInt(hex.substring(1, 3), 16) / 255;
+        var g = parseInt(hex.substring(3, 5), 16) / 255;
+        var b = parseInt(hex.substring(5, 7), 16) / 255;
+        return Qt.rgba(r, g, b, 1.0);
+    }
+
+    readonly property color backgroundColor: hexToRgba(background)
+    readonly property color foregroundColor: hexToRgba(foreground)
+    readonly property color highlightColor: hexToRgba(highlight)
+    readonly property color accent1Color: hexToRgba(accent1)
+    readonly property color accent2Color: hexToRgba(accent2)
+    readonly property color accent3Color: hexToRgba(accent3)
+    readonly property color accent4Color: hexToRgba(accent4)
+
+    // Theme names for selector
+    readonly property var themeNames: ["solarized", "onepiece", "brynas"]
+}

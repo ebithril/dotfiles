@@ -2,16 +2,21 @@ import "components"
 import "components/workspaces"
 import Quickshell
 import QtQuick
+import QtQuick.Layouts
 
 Scope {
+    id: barScope
+
+    // Property to track control center state
+    property bool controlCenterShown: false
+
+    // Signal to toggle control center
+    signal toggleControlCenter()
+
     Variants {
         model: Quickshell.screens
         PanelWindow {
-            // the screen from the screens list will be injected into this
-            // property
             required property var modelData
-
-            // we can then set the window's screen to the injected property
             screen: modelData
 
             anchors {
@@ -20,44 +25,75 @@ Scope {
                 right: true
             }
 
-            implicitHeight: 30
+            implicitHeight: 25
+            color: "transparent"
 
+            // Background bar
             Rectangle {
-                id: workspaces
+                anchors.fill: parent
+                color: Theme.backgroundColor
 
-                //anchors.horizontalCenter: parent.horizontalCenter
-                //anchors.top: osIcon.bottom
-                anchors.topMargin: 12
-
-                radius: 1000
-                color: "#201F25"
-
-                implicitWidth: workspacesInner.implicitWidth + 5 * 2
-                implicitHeight: workspacesInner.implicitHeight + 5 * 2
-
-                MouseArea {
+                // Main layout - left, center, right
+                RowLayout {
                     anchors.fill: parent
-                    anchors.leftMargin: -10
-                    anchors.rightMargin: -10
+                    spacing: 0
 
-                    function onWheel(event: WheelEvent): void {
-                        const activeWs = Hyprland.activeToplevel?.workspace?.name;
-                        if (activeWs?.startsWith("special:"))
-                            Hyprland.dispatch(`togglespecialworkspace ${activeWs.slice(8)}`);
-                        else if (event.angleDelta.y < 0 || Hyprland.activeWsId > 1)
-                            Hyprland.dispatch(`workspace r${event.angleDelta.y > 0 ? "-" : "+"}1`);
+                    // Left side - Workspaces
+                    Rectangle {
+                        Layout.alignment: Qt.AlignLeft
+                        Layout.leftMargin: 0
+                        color: Theme.backgroundColor
+
+                        implicitWidth: workspacesInner.implicitWidth + 20
+                        implicitHeight: parent.height
+
+                        WorkspacesEwwStyle {
+                            id: workspacesInner
+                            anchors.centerIn: parent
+                        }
+                    }
+
+                    // Center - Music player
+                    Item {
+                        Layout.fillWidth: true
+
+                        Rectangle {
+                            anchors.centerIn: parent
+                            color: Theme.backgroundColor
+                            implicitWidth: musicWidget.implicitWidth
+                            implicitHeight: parent.height
+
+                            MusicWidget {
+                                id: musicWidget
+                                anchors.centerIn: parent
+                            }
+                        }
+                    }
+
+                    // Right side - Control center button and time
+                    Rectangle {
+                        Layout.alignment: Qt.AlignRight
+                        Layout.rightMargin: 0
+                        color: Theme.backgroundColor
+                        implicitWidth: rightContent.implicitWidth + 20
+                        implicitHeight: parent.height
+
+                        RowLayout {
+                            id: rightContent
+                            anchors.centerIn: parent
+                            spacing: 15
+
+                            ControlCenterButton {
+                                controlCenterShown: barScope.controlCenterShown
+                                onClicked: barScope.toggleControlCenter()
+                            }
+
+                            ClockWidget {
+                                id: timeWidget
+                            }
+                        }
                     }
                 }
-
-                Workspaces {
-                    id: workspacesInner
-
-                    anchors.centerIn: parent
-                }
-            }
-
-            ClockWidget {
-                anchors.centerIn: parent
             }
         }
     }
