@@ -53,8 +53,8 @@ Singleton {
             wallpaperProcess.command = ["sh", "-c", "hyprctl hyprpaper reload ,\"" + wallpaperPath + "\""]
             wallpaperProcess.running = true
 
-            // Generate pywal colorscheme from wallpaper and reload apps
-            pywalProcess.command = ["sh", "-c", "wal -i \"" + wallpaperPath + "\" -n -q && killall -SIGUSR1 kitty && hyprctl reload"]
+            // Apply pywal theme (using predefined colorscheme) and reload apps
+            pywalProcess.command = ["sh", "-c", "wal --theme " + currentTheme + " -n -q && killall -SIGUSR1 kitty && hyprctl reload"]
             pywalProcess.running = true
         }
     }
