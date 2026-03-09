@@ -21,10 +21,14 @@ export PATH="$PATH:/home/ebithril/.local/bin"
 
 export FLYCTL_INSTALL="/home/ebithril/.fly"
 export PATH="$FLYCTL_INSTALL/bin:$PATH"
+export PATH="/home/ebithril/.cargo/bin:$PATH"
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 alias nvim-kickstart='NVIM_APPNAME="nvim-kickstart" nvim'
 alias lazyvim='NVIM_APPNAME="lazyvim" nvim'
+alias sm='send-message.sh'
 
 fastfetch
+
+[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path bash)"

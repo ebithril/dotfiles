@@ -17,15 +17,15 @@ Rectangle {
             if (!backlight) return ""
             var percent = Math.round(backlight.brightness * 100)
             var icon = ""
-            if (percent >= 90) icon = ""
-            else if (percent >= 60) icon = ""
-            else if (percent >= 30) icon = ""
-            else icon = ""
+            if (percent >= 90) icon = Theme.icons.brightnessHigh
+            else if (percent >= 60) icon = Theme.icons.brightnessMedium
+            else if (percent >= 30) icon = Theme.icons.brightnessLow
+            else icon = Theme.icons.brightnessMin
             return `${percent}% ${icon}`
         }
         color: Colors.color8
         font.pixelSize: 10
-        font.family: "FontAwesome"
+        font.family: Theme.iconFont
     }
 
     visible: backlight !== null

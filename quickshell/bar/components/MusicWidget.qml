@@ -7,7 +7,7 @@ Item {
     implicitWidth: label.visible ? label.implicitWidth : 0
     implicitHeight: 25
 
-    property var player: Mpris.players[0]
+    property var player: Mpris.players.length > 0 ? Mpris.players[0] : null
 
     Text {
         id: label
@@ -26,7 +26,7 @@ Item {
         }
         color: Theme.foregroundColor
         font.pixelSize: 12
-        font.family: "FiraCode"
+        font.family: Theme.textFont
         elide: Text.ElideRight
         maximumLineCount: 1
     }

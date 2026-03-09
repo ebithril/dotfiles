@@ -6,7 +6,7 @@ import Quickshell.Io
 ControlMetric {
     id: brightnessControl
 
-    label: "󰃠 "
+    label: Theme.icons.brightnessHigh
     value: brightnessValue
 
     property real brightnessValue: 0

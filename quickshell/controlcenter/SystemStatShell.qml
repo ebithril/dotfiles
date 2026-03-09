@@ -3,6 +3,7 @@ import Quickshell
 import Quickshell.Io
 
 Item {
+    id: root
     property string label: ""
     property var command: []
     property color statColor: "#2f76dc"
@@ -16,14 +17,14 @@ Item {
     // Get stat value periodically
     Process {
         id: getStatProc
-        command: parent.command
+        command: root.command || []
         running: command.length > 0
 
         stdout: StdioCollector {
             onStreamFinished: {
                 var val = parseFloat(this.text.trim())
                 if (!isNaN(val)) {
-                    parent.statValue = val
+                    root.statValue = val
                 }
             }
         }
@@ -33,7 +34,7 @@ Item {
         interval: 2000
         running: true
         repeat: true
-        onTriggered: if (command.length > 0) getStatProc.running = true
+        onTriggered: if (root.command.length > 0) getStatProc.running = true
     }
 
     // Background circle
@@ -52,6 +53,9 @@ Item {
         id: canvas
         anchors.fill: parent
 
+        property real watchedValue: root.statValue
+        onWatchedValueChanged: requestPaint()
+
         onPaint: {
             var ctx = getContext("2d")
             var centerX = width / 2
@@ -62,17 +66,10 @@ Item {
 
             // Draw arc
             ctx.beginPath()
-            ctx.arc(centerX, centerY, radius, -Math.PI / 2, -Math.PI / 2 + (value / 100 * 2 * Math.PI), false)
+            ctx.arc(centerX, centerY, radius, -Math.PI / 2, -Math.PI / 2 + (root.value / 100 * 2 * Math.PI), false)
             ctx.lineWidth = 5
-            ctx.strokeStyle = parent.statColor
+            ctx.strokeStyle = root.statColor
             ctx.stroke()
-        }
-
-        Connections {
-            target: parent
-            function onValueChanged() {
-                canvas.requestPaint()
-            }
         }
 
         Component.onCompleted: requestPaint()
@@ -81,8 +78,8 @@ Item {
     // Label
     Text {
         anchors.centerIn: parent
-        text: label
-        color: parent.statColor
+        text: root.label
+        color: root.statColor
         font.pixelSize: 20
     }
 }

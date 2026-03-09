@@ -6,18 +6,32 @@ import Quickshell.Hyprland
 RowLayout {
     spacing: 15
 
+    function getWorkspaceIcon(id) {
+        if (Theme.character === "luffy") return Theme.icons.wsLuffy
+        if (Theme.character === "zoro") return Theme.icons.wsZoro
+        if (Theme.character === "nami") return Theme.icons.wsNami
+        if (Theme.character === "usopp") return Theme.icons.wsUsopp
+        if (Theme.character === "sanji") return Theme.icons.wsSanji
+        if (Theme.character === "chopper") return Theme.icons.wsChopper
+        if (Theme.character === "robin") return Theme.icons.wsRobin
+        if (Theme.character === "franky") return Theme.icons.wsFranky
+        if (Theme.character === "brook") return Theme.icons.wsBrook
+        if (Theme.character === "jinbe") return Theme.icons.wsJinbe
+        return Theme.icons.wsDefault
+    }
+
     // Using simpler Unicode symbols that work without Nerd Fonts
     // Install a Nerd Font for better icons
     property var workspaceIcons: [
-        {"id": 1, "icon": "●"},  // Circle for workspace 1
-        {"id": 2, "icon": "●"},
-        {"id": 3, "icon": "●"},
-        {"id": 4, "icon": "●"},
-        {"id": 5, "icon": "●"},
-        {"id": 6, "icon": "●"},
-        {"id": 7, "icon": "●"},
-        {"id": 8, "icon": "●"},
-        {"id": 9, "icon": "●"}
+        {"id": 1},
+        {"id": 2},
+        {"id": 3},
+        {"id": 4},
+        {"id": 5},
+        {"id": 6},
+        {"id": 7},
+        {"id": 8},
+        {"id": 9}
     ]
 
     Repeater {
@@ -26,7 +40,7 @@ RowLayout {
         Rectangle {
             required property var modelData
             property int wsId: modelData.id
-            property string wsIcon: modelData.icon
+            property string wsIcon: getWorkspaceIcon(wsId)
             property bool isActive: Hyprland.focusedWorkspace && Hyprland.focusedWorkspace.id === wsId
 
             Layout.preferredWidth: 20
@@ -39,18 +53,19 @@ RowLayout {
                 anchors.centerIn: parent
                 text: parent.wsIcon
                 color: parent.isActive ? Theme.highlightColor : Theme.foregroundColor
-                font.pixelSize: 10
+                font.pixelSize: 14
+                font.family: Theme.iconFont
                 font.bold: parent.isActive
 
                 // Scale up active workspace circle
                 scale: parent.isActive ? 1.3 : 1.0
 
                 Behavior on color {
-                    ColorAnimation { duration: 150 }
+                    ColorAnimation { duration: Theme.animDuration; easing.type: Theme.animEasing }
                 }
 
                 Behavior on scale {
-                    NumberAnimation { duration: 150 }
+                    NumberAnimation { duration: Theme.animDuration; easing.type: Theme.animEasing }
                 }
             }
 
@@ -67,7 +82,7 @@ RowLayout {
                 radius: 1
 
                 Behavior on visible {
-                    NumberAnimation { duration: 150 }
+                    NumberAnimation { duration: Theme.animDuration; easing.type: Theme.animEasing }
                 }
             }
 

@@ -9,9 +9,9 @@ Rectangle {
     color: "transparent"
 
     property string icon: {
-        if (SystemStats.cpuTemperature >= 80) return ""
-        if (SystemStats.cpuTemperature >= 60) return ""
-        return ""
+        if (SystemStats.cpuTemperature >= 80) return Theme.icons.temperatureHot
+        if (SystemStats.cpuTemperature >= 60) return Theme.icons.temperatureWarm
+        return Theme.icons.temperatureCool
     }
 
     Text {
@@ -20,6 +20,6 @@ Rectangle {
         text: `${Math.round(SystemStats.cpuTemperature)}°C ${icon}`
         color: SystemStats.cpuTemperature >= 80 ? "#eb4d4b" : Colors.color8
         font.pixelSize: 10
-        font.family: "FontAwesome"
+        font.family: Theme.iconFont
     }
 }

@@ -5,8 +5,8 @@ import Quickshell.Services.Pipewire
 import Quickshell.Io
 
 Rectangle {
-    implicitHeight: row.implicitHeight + 10
-    color: Theme.backgroundColor
+    implicitHeight: row.implicitHeight + 6
+    color: Qt.darker(Theme.backgroundColor, 1.05)
     radius: 5
 
     property var audioSink: Pipewire.defaultAudioSink
@@ -14,18 +14,18 @@ Rectangle {
     RowLayout {
         id: row
         anchors.fill: parent
-        anchors.margins: 5
-        spacing: 44
+        anchors.margins: 3
+        spacing: 5
 
         // Volume Mute Toggle
         ToggleButton {
-            inactiveLabel: "🔇"
-            activeLabel: "🔊"
+            inactiveLabel: Theme.icons.volumeMuted
+            activeLabel: Theme.icons.volumeHigh
             active: audioSink ? !audioSink.audio.muted : false
             buttonColor: Theme.accent1Color
             onClicked: {
                 if (audioSink) {
-                    audioSink.audio.muted = !audioSink.audio.muted
+                    audioSink.audio.muted = !audioSink.audio.muted;
                 }
             }
         }
@@ -33,15 +33,26 @@ Rectangle {
         // WiFi Toggle
         ToggleButton {
             id: wifiToggle
-            activeLabel: "📶"
-            inactiveLabel: "📵"
+            activeLabel: Theme.icons.wifi
+            inactiveLabel: Theme.icons.networkDisconnected
             active: wifiEnabled === "enabled"
             buttonColor: Theme.accent2Color
             onClicked: {
-                Quickshell.exec("nmcli radio wifi " + (active ? "off" : "on"))
+                toggleWifiProc.command = ["nmcli", "radio", "wifi", active ? "off" : "on"]
+                toggleWifiProc.running = true
             }
 
             property string wifiEnabled: ""
+
+            Process {
+                id: toggleWifiProc
+                running: false
+                onRunningChanged: {
+                    if (!running) {
+                        wifiProc.running = true
+                    }
+                }
+            }
 
             Process {
                 id: wifiProc
@@ -64,15 +75,26 @@ Rectangle {
         // Bluetooth Toggle
         ToggleButton {
             id: btToggle
-            activeLabel: "🔵"
-            inactiveLabel: "⚫"
+            activeLabel: Theme.icons.bluetooth
+            inactiveLabel: Theme.icons.bluetoothDisabled
             active: btEnabled.includes("Running")
             buttonColor: Theme.accent3Color
             onClicked: {
-                Quickshell.exec(active ? "systemctl stop bluetooth" : "systemctl start bluetooth")
+                toggleBtProc.command = ["systemctl", active ? "stop" : "start", "bluetooth"]
+                toggleBtProc.running = true
             }
 
             property string btEnabled: ""
+
+            Process {
+                id: toggleBtProc
+                running: false
+                onRunningChanged: {
+                    if (!running) {
+                        btProc.running = true
+                    }
+                }
+            }
 
             Process {
                 id: btProc
@@ -95,19 +117,33 @@ Rectangle {
         // Idle Inhibit Toggle
         ToggleButton {
             id: idleToggle
-            activeLabel: "☕"
-            inactiveLabel: "💤"
+            activeLabel: Theme.icons.idleInhibit
+            inactiveLabel: Theme.icons.sleep
             active: idleStatus === "0"
             buttonColor: Theme.accent4Color
             onClicked: {
-                Quickshell.exec("~/dotfiles/eww/scripts/toggle-idle")
+                toggleIdleProc.running = true
+                statusCheckDelay.start()
             }
 
             property string idleStatus: "0"
 
             Process {
+                id: toggleIdleProc
+                command: ["sh", "-c", "~/dotfiles/quickshell/scripts/toggle-idle"]
+                running: false
+            }
+
+            Timer {
+                id: statusCheckDelay
+                interval: 500
+                repeat: false
+                onTriggered: idleProc.running = true
+            }
+
+            Process {
                 id: idleProc
-                command: ["sh", "-c", "~/dotfiles/eww/scripts/check-idle"]
+                command: ["sh", "-c", "~/dotfiles/quickshell/scripts/check-idle"]
                 running: true
 
                 stdout: StdioCollector {

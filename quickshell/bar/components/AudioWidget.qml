@@ -20,23 +20,23 @@ Rectangle {
             var icon = ""
 
             if (sink.muted) {
-                return `(${volume}%)  `
+                return `(${volume}%) ${Theme.icons.volumeMuted}`
             }
 
             // Choose icon based on volume level
             if (volume >= 70) {
-                icon = ""
+                icon = Theme.icons.volumeHigh
             } else if (volume >= 30) {
-                icon = ""
+                icon = Theme.icons.volumeMedium
             } else {
-                icon = ""
+                icon = Theme.icons.volumeLow
             }
 
             return `${volume}% ${icon}`
         }
         color: Colors.color8
         font.pixelSize: 10
-        font.family: "FontAwesome"
+        font.family: Theme.iconFont
     }
 
     MouseArea {

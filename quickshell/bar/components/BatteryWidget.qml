@@ -23,24 +23,24 @@ Rectangle {
 
             var icon = ""
             if (battery.charging) {
-                icon = ""
+                icon = Theme.icons.batteryCharging
             } else if (battery.percentage >= 90) {
-                icon = ""
+                icon = Theme.icons.batteryFull
             } else if (battery.percentage >= 70) {
-                icon = ""
+                icon = Theme.icons.battery70
             } else if (battery.percentage >= 50) {
-                icon = ""
+                icon = Theme.icons.battery50
             } else if (battery.percentage >= 30) {
-                icon = ""
+                icon = Theme.icons.battery30
             } else {
-                icon = ""
+                icon = Theme.icons.batteryLow
             }
 
             return `${Math.round(battery.percentage)}% ${icon}`
         }
         color: Colors.color8
         font.pixelSize: 10
-        font.family: "FontAwesome"
+        font.family: Theme.iconFont
     }
 
     SequentialAnimation on opacity {

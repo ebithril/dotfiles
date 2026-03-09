@@ -17,13 +17,13 @@ Rectangle {
         text: controlCenterShown ? "✕" : "⚙"
         color: Theme.foregroundColor
         font.pixelSize: 14
-        font.family: "FiraCode"
+        font.family: Theme.textFont
 
         Behavior on text {
             SequentialAnimation {
-                NumberAnimation { target: label; property: "opacity"; to: 0; duration: 75 }
+                NumberAnimation { target: label; property: "opacity"; to: 0; duration: Theme.animDuration / 2 }
                 PropertyAction { target: label; property: "text" }
-                NumberAnimation { target: label; property: "opacity"; to: 1; duration: 75 }
+                NumberAnimation { target: label; property: "opacity"; to: 1; duration: Theme.animDuration / 2 }
             }
         }
     }

@@ -11,7 +11,7 @@ Scope {
     property bool controlCenterShown: false
 
     // Signal to toggle control center
-    signal toggleControlCenter()
+    signal toggleControlCenter
 
     Variants {
         model: Quickshell.screens

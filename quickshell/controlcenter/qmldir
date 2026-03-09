@@ -10,3 +10,4 @@ ControlMetric 1.0 ControlMetric.qml
 SystemInfo 1.0 SystemInfo.qml
 SystemStat 1.0 SystemStat.qml
 SystemStatShell 1.0 SystemStatShell.qml
+NotificationCenter 1.0 NotificationCenter.qml

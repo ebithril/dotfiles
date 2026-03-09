@@ -4,8 +4,10 @@ import Quickshell
 
 Rectangle {
     implicitHeight: column.implicitHeight + 20
-    color: Theme.backgroundColor
+    color: Qt.lighter(Theme.backgroundColor, 1.1)
     radius: 5
+    border.width: 1
+    border.color: Qt.lighter(Theme.backgroundColor, 1.3)
 
     ColumnLayout {
         id: column
@@ -17,6 +19,7 @@ Rectangle {
             text: "Theme"
             color: Theme.foregroundColor
             font.pixelSize: 14
+            font.family: Theme.textFont
             font.bold: true
         }
 
@@ -43,6 +46,7 @@ Rectangle {
                         text: Theme.themes[parent.modelData].name
                         color: parent.isSelected ? "#ffffff" : Theme.foregroundColor
                         font.pixelSize: 10
+                        font.family: Theme.textFont
                         elide: Text.ElideRight
                         width: parent.width - 10
                         horizontalAlignment: Text.AlignHCenter
