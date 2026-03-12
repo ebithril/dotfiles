@@ -51,8 +51,18 @@ Scope {
                 xScale: Theme.character === "luffy" ? (root.shown ? 1.0 : 0.8) : 1.0
                 yScale: Theme.character === "luffy" ? (root.shown ? 1.0 : 1.2) : 1.0
 
-                Behavior on xScale { NumberAnimation { duration: Theme.animDuration; easing.type: Theme.animEasing } }
-                Behavior on yScale { NumberAnimation { duration: Theme.animDuration; easing.type: Theme.animEasing } }
+                Behavior on xScale {
+                    NumberAnimation {
+                        duration: Theme.animDuration
+                        easing.type: Theme.animEasing
+                    }
+                }
+                Behavior on yScale {
+                    NumberAnimation {
+                        duration: Theme.animDuration
+                        easing.type: Theme.animEasing
+                    }
+                }
             }
 
             ColumnLayout {
@@ -67,11 +77,6 @@ Scope {
                     color: Theme.foregroundColor
                     font.pixelSize: 14
                     font.family: Theme.textFont
-                }
-
-                // Theme Selector
-                ThemeSelector {
-                    Layout.fillWidth: true
                 }
 
                 // Notification Center

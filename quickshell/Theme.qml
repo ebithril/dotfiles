@@ -7,6 +7,7 @@ Singleton {
     id: root
 
     // Available themes
+    readonly property string homeDir: "file://" + Quickshell.env("HOME")
     readonly property var themes: ({
             "luffy": {
                 name: "Luffy (Gear 5)",
@@ -18,7 +19,7 @@ Singleton {
                 accent3: "#cba6f7",
                 accent4: "#fab387",
                 wallpaper: "$HOME/dotfiles/assets/wallpapers/luffy.jpg",
-                wanted: "../../assets/wallpapers/luffy-wanted.jpeg",
+                wanted: homeDir + "/dotfiles/assets/wallpapers/luffy-wanted.jpeg",
                 animDuration: 600,
                 animEasing: Easing.OutElastic,
                 character: "luffy",
@@ -34,7 +35,7 @@ Singleton {
                 accent3: "#313244",
                 accent4: "#eba0ac",
                 wallpaper: "$HOME/dotfiles/assets/wallpapers/zoro.jpg",
-                wanted: "$HOME/dotfiles/assets/wallpapers/zoro-wanted.png",
+                wanted: homeDir + "/dotfiles/assets/wallpapers/zoro-wanted.png",
                 animDuration: 150,
                 animEasing: Easing.OutQuint,
                 character: "zoro",
@@ -50,7 +51,7 @@ Singleton {
                 accent3: "#89dceb",
                 accent4: "#a6e3a1",
                 wallpaper: "$HOME/dotfiles/assets/wallpapers/nami.jpg",
-                wanted: "$HOME/dotfiles/assets/wallpapers/nami-wanted.jpg",
+                wanted: homeDir + "/dotfiles/assets/wallpapers/nami-wanted.jpg",
                 animDuration: 300,
                 animEasing: Easing.InOutSine,
                 character: "nami",
@@ -66,7 +67,7 @@ Singleton {
                 accent3: "#fab387",
                 accent4: "#94e2d5",
                 wallpaper: "$HOME/dotfiles/assets/wallpapers/usopp.jpg",
-                wanted: "$HOME/dotfiles/assets/wallpapers/usopp-wanted.jpg",
+                wanted: homeDir + "/dotfiles/assets/wallpapers/usopp-wanted.jpg",
                 animDuration: 250,
                 animEasing: Easing.OutBack,
                 character: "usopp",
@@ -82,7 +83,7 @@ Singleton {
                 accent3: "#89b4fa",
                 accent4: "#eba0ac",
                 wallpaper: "$HOME/dotfiles/assets/wallpapers/sanji.jpg",
-                wanted: "$HOME/dotfiles/assets/wallpapers/sanji-wanted.jpg",
+                wanted: homeDir + "/dotfiles/assets/wallpapers/sanji-wanted.jpg",
                 animDuration: 200,
                 animEasing: Easing.InBack,
                 character: "sanji",
@@ -98,7 +99,7 @@ Singleton {
                 accent3: "#f9e2af",
                 accent4: "#eba0ac",
                 wallpaper: "$HOME/dotfiles/assets/wallpapers/chopper.jpg",
-                wanted: "$HOME/dotfiles/assets/wallpapers/chopper-wanted.jpg",
+                wanted: homeDir + "/dotfiles/assets/wallpapers/chopper-wanted.jpg",
                 animDuration: 400,
                 animEasing: Easing.InOutBack,
                 character: "chopper",
@@ -114,7 +115,7 @@ Singleton {
                 accent3: "#94e2d5",
                 accent4: "#89b4fa",
                 wallpaper: "$HOME/dotfiles/assets/wallpapers/robin.jpg",
-                wanted: "$HOME/dotfiles/assets/wallpapers/robin-wanted.jpg",
+                wanted: homeDir + "/dotfiles/assets/wallpapers/robin-wanted.jpg",
                 animDuration: 500,
                 animEasing: Easing.InOutCubic,
                 character: "robin",
@@ -130,7 +131,7 @@ Singleton {
                 accent3: "#89b4fa",
                 accent4: "#fab387",
                 wallpaper: "$HOME/dotfiles/assets/wallpapers/franky.jpg",
-                wanted: "$HOME/dotfiles/assets/wallpapers/franky-wanted.jpg",
+                wanted: homeDir + "/dotfiles/assets/wallpapers/franky-wanted.jpg",
                 animDuration: 300,
                 animEasing: Easing.Linear,
                 character: "franky",
@@ -146,7 +147,7 @@ Singleton {
                 accent3: "#bac2de",
                 accent4: "#ffffff",
                 wallpaper: "$HOME/dotfiles/assets/wallpapers/brook.jpg",
-                wanted: "$HOME/dotfiles/assets/wallpapers/brook-wanted.jpeg",
+                wanted: homeDir + "/dotfiles/assets/wallpapers/brook-wanted.jpeg",
                 animDuration: 800,
                 animEasing: Easing.OutExpo,
                 character: "brook",
@@ -162,7 +163,7 @@ Singleton {
                 accent3: "#94e2d5",
                 accent4: "#f9e2af",
                 wallpaper: "$HOME/dotfiles/assets/wallpapers/jinbei.jpg",
-                wanted: "$HOME/dotfiles/assets/wallpapers/jinbei-wanted.jpg",
+                wanted: homeDir + "/dotfiles/assets/wallpapers/jinbei-wanted.jpg",
                 animDuration: 400,
                 animEasing: Easing.InOutQuad,
                 character: "jinbe",
@@ -290,7 +291,7 @@ Singleton {
         readonly property string sleep: "󰒲"
 
         // Character workspace icons
-        readonly property string wsLuffy: "󰚎"   // Straw hat
+        readonly property string wsLuffy: ""   // Straw hat
         readonly property string wsZoro: "󰓠"    // Swords
         readonly property string wsNami: "󰖐"    // Cloud
         readonly property string wsUsopp: "󰛋"   // Target
