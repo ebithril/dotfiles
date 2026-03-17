@@ -20,32 +20,15 @@ Scope {
         let idx = parseInt(widgetArg);
         if (!isNaN(idx)) {
             targetWallIndex = idx;
-            tryFocus();
         }
     }
 
-    function tryFocus() {
-        if (!initialFocusSet) {
-            // Wait until the model has loaded enough items to actually reach our target
-            if (view.count > targetWallIndex) {
-                view.currentIndex = targetWallIndex;
-                view.positionViewAtIndex(targetWallIndex, ListView.Center);
-                initialFocusSet = true;
-            } else if (folderModel.status === FolderListModel.Ready && view.count > 0) {
-                // Fallback: If the folder completely finished loading but the index is somehow out of bounds
-                let safeIndex = Math.max(0, view.count - 1);
-                view.currentIndex = safeIndex;
-                view.positionViewAtIndex(safeIndex, ListView.Center);
-                initialFocusSet = true;
-            }
-        }
-    }
-
+    readonly property int borderWidth: 3
     readonly property int scaledScreenWidth: Hyprland.focusedMonitor.width / Hyprland.focusedMonitor.scale
-    readonly property int itemWidth: scaledScreenWidth / 10
+    readonly property int switcherWidth: scaledScreenWidth - 100
+    readonly property int itemWidth: switcherWidth / 10 - ((borderWidth * 11) / 10)
     readonly property double itemRatio: 1414 / 1000
     readonly property int itemHeight: itemWidth * itemRatio
-    readonly property int borderWidth: 3
     readonly property int spacing: 0
     readonly property real skewFactor: 0
 
@@ -70,129 +53,87 @@ Scope {
     // -------------------------------------------------------------------------
     PanelWindow {
         visible: root.shown
-        implicitWidth: root.scaledScreenWidth
+        implicitWidth: root.switcherWidth + root.itemWidth * 0.15
         implicitHeight: root.itemHeight * 1.15
         color: "transparent"
-        ListView {
-            id: view
-            anchors.fill: parent
-            anchors.margins: 0
+        RowLayout {
+            Repeater {
+                id: view
+                clip: false
 
-            spacing: root.spacing
-            orientation: ListView.Horizontal
-            clip: false
+                // Pre-load items off-screen so they don't block the thread as they enter the view
 
-            // Pre-load items off-screen so they don't block the thread as they enter the view
-            cacheBuffer: 2000
+                // Reset back to standard speed for snappy manual keyboard navigation
 
-            highlightRangeMode: ListView.StrictlyEnforceRange
-            preferredHighlightBegin: (width / 2) - (root.itemWidth / 2)
-            preferredHighlightEnd: (width / 2) + (root.itemWidth / 2)
+                focus: true
 
-            // Reset back to standard speed for snappy manual keyboard navigation
-            highlightMoveDuration: root.initialFocusSet ? 300 : 0
+                model: Theme.themeNames
+                delegate: Item {
+                    id: delegateRoot
+                    required property string modelData
+                    width: root.itemWidth
+                    height: root.itemHeight
 
-            focus: true
+                    readonly property bool isCurrent: Theme.currentTheme == modelData
+                    z: isCurrent ? 10 : 1
 
-            onCountChanged: root.tryFocus()
-
-            model: ListModel {
-                ListElement {
-                    name: "luffy"
-                }
-                ListElement {
-                    name: "zoro"
-                }
-                ListElement {
-                    name: "nami"
-                }
-                ListElement {
-                    name: "usopp"
-                }
-                ListElement {
-                    name: "sanji"
-                }
-                ListElement {
-                    name: "chopper"
-                }
-                ListElement {
-                    name: "robin"
-                }
-                ListElement {
-                    name: "franky"
-                }
-                ListElement {
-                    name: "brook"
-                }
-                ListElement {
-                    name: "jinbe"
-                }
-            }
-
-            delegate: Item {
-                id: delegateRoot
-                width: root.itemWidth
-                height: root.itemHeight
-                anchors.verticalCenter: parent.verticalCenter
-
-                readonly property bool isCurrent: ListView.isCurrentItem
-                readonly property bool isVideo: false
-
-                z: isCurrent ? 10 : 1
-
-                function pickWallpaper() {
-                    Theme.currentTheme = name;
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        view.currentIndex = index;
-                        delegateRoot.pickWallpaper();
+                    function pickWallpaper() {
+                        Theme.currentTheme = modelData;
                     }
-                }
 
-                Item {
-                    anchors.centerIn: parent
-                    width: parent.width
-                    height: parent.height
-
-                    scale: delegateRoot.isCurrent ? 1.15 : 0.95
-                    opacity: delegateRoot.isCurrent ? 1.0 : 0.6
-
-                    Behavior on scale {
-                        NumberAnimation {
-                            duration: 500
-                            easing.type: Easing.OutBack
+                    MouseArea {
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        onClicked: {
+                            root.shown = false;
                         }
-                    }
-                    Behavior on opacity {
-                        NumberAnimation {
-                            duration: 500
+                        onEntered: {
+                            delegateRoot.pickWallpaper();
                         }
                     }
 
                     Item {
-                        anchors.fill: parent
-                        anchors.margins: root.borderWidth
+                        anchors.centerIn: parent
+                        width: parent.width
+                        height: parent.height
 
-                        Rectangle {
-                            anchors.fill: parent
-                            color: "black"
+                        scale: delegateRoot.isCurrent ? 1.15 : 0.95
+                        opacity: delegateRoot.isCurrent ? 1.0 : 0.6
+
+                        Behavior on scale {
+                            NumberAnimation {
+                                duration: 500
+                                easing.type: Easing.OutBack
+                            }
                         }
-                        clip: true
+                        Behavior on opacity {
+                            NumberAnimation {
+                                duration: 500
+                            }
+                        }
 
-                        Image {
-                            anchors.centerIn: parent
+                        Item {
+                            anchors.fill: parent
+                            anchors.margins: root.borderWidth
 
-                            width: parent.width
-                            height: parent.height
+                            Rectangle {
+                                anchors.fill: parent
+                                color: "black"
+                            }
+                            clip: true
 
-                            fillMode: Image.Stretch
-                            source: Theme.themes[name].wanted
+                            Image {
+                                anchors.centerIn: parent
 
-                            // Load from disk on a background thread to prevent UI freezing
-                            asynchronous: true
+                                width: parent.width
+                                height: parent.height
+
+                                fillMode: Image.Stretch
+                                source: Theme.themes[delegateRoot.modelData].wanted
+
+                                // Load from disk on a background thread to prevent UI freezing
+                                asynchronous: true
+                            }
                         }
                     }
                 }
