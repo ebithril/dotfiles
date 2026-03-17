@@ -32,3 +32,5 @@ alias sm='send-message.sh'
 fastfetch
 
 [[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path bash)"
+
+export PATH=$PATH:/home/ebithril/.spicetify
