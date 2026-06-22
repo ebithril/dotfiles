@@ -23,6 +23,7 @@ Singleton {
                 animDuration: 600,
                 animEasing: Easing.OutElastic,
                 character: "luffy",
+                icon: "",
                 hyprAnim: "bezier=nika,0.34,1.56,0.64,1.2; animation=windows,1,10,nika,popin 60%; animation=workspaces,1,10,nika,slide"
             },
             "zoro": {
@@ -39,6 +40,7 @@ Singleton {
                 animDuration: 150,
                 animEasing: Easing.OutQuint,
                 character: "zoro",
+                icon: "󰓠",
                 hyprAnim: "bezier=slash,0.1,1,0,1; animation=windows,1,4,slash,slide; animation=workspaces,1,5,slash,slide"
             },
             "nami": {
@@ -55,6 +57,7 @@ Singleton {
                 animDuration: 300,
                 animEasing: Easing.InOutSine,
                 character: "nami",
+                icon: "󰖐",
                 hyprAnim: "bezier=wind,0.45,0,0.55,1; animation=windows,1,8,wind,slide; animation=workspaces,1,8,wind,slidefade"
             },
             "usopp": {
@@ -71,6 +74,7 @@ Singleton {
                 animDuration: 250,
                 animEasing: Easing.OutBack,
                 character: "usopp",
+                icon: "󰛋",
                 hyprAnim: "bezier=target,0.175, 0.885, 0.32, 1.275; animation=windows,1,7,target,popin; animation=workspaces,1,7,target,slide"
             },
             "sanji": {
@@ -87,6 +91,7 @@ Singleton {
                 animDuration: 200,
                 animEasing: Easing.InBack,
                 character: "sanji",
+                icon: "󱗿",
                 hyprAnim: "bezier=kick,0.6, -0.28, 0.735, 0.045; animation=windows,1,6,kick,slide; animation=workspaces,1,6,kick,slide"
             },
             "chopper": {
@@ -103,6 +108,7 @@ Singleton {
                 animDuration: 400,
                 animEasing: Easing.InOutBack,
                 character: "chopper",
+                icon: "󰄏",
                 hyprAnim: "bezier=bounce,0.175, 0.885, 0.32, 1.275; animation=windows,1,10,bounce,popin; animation=workspaces,1,10,bounce,slide"
             },
             "robin": {
@@ -119,6 +125,7 @@ Singleton {
                 animDuration: 500,
                 animEasing: Easing.InOutCubic,
                 character: "robin",
+                icon: "󱥔",
                 hyprAnim: "bezier=bloom,0.65, 0, 0.35, 1; animation=windows,1,12,bloom,slide; animation=workspaces,1,10,bloom,slidefade"
             },
             "franky": {
@@ -135,6 +142,7 @@ Singleton {
                 animDuration: 300,
                 animEasing: Easing.Linear,
                 character: "franky",
+                icon: "󰚗",
                 hyprAnim: "bezier=metal,0,0,1,1; animation=windows,1,8,metal,slide; animation=workspaces,1,8,metal,slide"
             },
             "brook": {
@@ -151,6 +159,7 @@ Singleton {
                 animDuration: 800,
                 animEasing: Easing.OutExpo,
                 character: "brook",
+                icon: "󰝚",
                 hyprAnim: "bezier=soul,0.16, 1, 0.3, 1; animation=windows,1,15,soul,slide; animation=workspaces,1,12,soul,slidefade"
             },
             "jinbe": {
@@ -167,42 +176,47 @@ Singleton {
                 animDuration: 400,
                 animEasing: Easing.InOutQuad,
                 character: "jinbe",
+                icon: "󰈼",
                 hyprAnim: "bezier=wave,0.45, 0, 0.55, 1; animation=windows,1,10,wave,slide; animation=workspaces,1,10,wave,slide"
             }
         })
 
     property string currentTheme: "luffy"
+    property string currentWallpaper: themes[currentTheme].wallpaper
 
     // Animation settings
     readonly property int animDuration: themes[currentTheme].animDuration ?? 200
     readonly property int animEasing: themes[currentTheme].animEasing ?? Easing.InOutQuad
-    readonly property string character: themes[currentTheme].character ?? "none"
+
+    onCurrentWallpaperChanged: {
+        if (currentWallpaper) {
+            // Change wallpaper
+            wallpaperProcess.command = ["sh", "-c", "hyprctl hyprpaper wallpaper ,\"" + currentWallpaper + "\""];
+            wallpaperProcess.running = true;
+        }
+    }
 
     // Wallpaper and pywal changer
     onCurrentThemeChanged: {
         var themeData = themes[currentTheme];
+        currentWallpaper = themeData.wallpaper;
+
         var wallpaperPath = themeData.wallpaper;
-        if (wallpaperPath) {
-            // Change wallpaper
-            wallpaperProcess.command = ["sh", "-c", "hyprctl hyprpaper wallpaper ,\"" + wallpaperPath + "\""];
-            wallpaperProcess.running = true;
-
-            // Prepare hyprland animation content
-            var hyprContent = "";
-            if (themeData.hyprAnim) {
-                var anims = themeData.hyprAnim.split(";");
-                for (var i = 0; i < anims.length; i++) {
-                    hyprContent += "keyword " + anims[i].trim() + "\n";
-                }
+        // Prepare hyprland animation content
+        var hyprContent = "";
+        if (themeData.hyprAnim) {
+            var anims = themeData.hyprAnim.split(";");
+            for (var i = 0; i < anims.length; i++) {
+                hyprContent += "keyword " + anims[i].trim() + "\n";
             }
-
-            // Format for sourcing: just use keywords directly
-            var hyprFileContent = themeData.hyprAnim ? themeData.hyprAnim.replace(/;/g, "\n") : "";
-
-            // Apply pywal theme (using predefined colorscheme) and reload apps
-            pywalProcess.command = ["sh", "-c", "wal --theme " + currentTheme + " -n -q && echo \"" + hyprFileContent + "\" > ~/.cache/wal/hyprland-anim.conf && walcord -t ~/.cache/wal/vesktop-walcord.theme.css -o ~/.config/vesktop/themes/walcord.theme.css -q && killall -SIGUSR1 kitty && hyprctl reload"];
-            pywalProcess.running = true;
         }
+
+        // Format for sourcing: just use keywords directly
+        var hyprFileContent = themeData.hyprAnim ? themeData.hyprAnim.replace(/;/g, "\n") : "";
+
+        // Apply pywal theme (using predefined colorscheme) and reload apps
+        pywalProcess.command = ["sh", "-c", "wal --theme " + currentTheme + " -n -q && echo \"" + hyprFileContent + "\" > ~/.cache/wal/hyprland-anim.conf && walcord -t ~/.cache/wal/vesktop-walcord.theme.css -o ~/.config/vesktop/themes/walcord.theme.css -q && killall -SIGUSR1 kitty && hyprctl reload"];
+        pywalProcess.running = true;
     }
 
     Process {
@@ -289,19 +303,6 @@ Singleton {
         // Idle/Sleep
         readonly property string idleInhibit: "󰅶"
         readonly property string sleep: "󰒲"
-
-        // Character workspace icons
-        readonly property string wsLuffy: ""   // Straw hat
-        readonly property string wsZoro: "󰓠"    // Swords
-        readonly property string wsNami: "󰖐"    // Cloud
-        readonly property string wsUsopp: "󰛋"   // Target
-        readonly property string wsSanji: "󱗿"   // Chef hat
-        readonly property string wsChopper: "󰄏" // Medical cross
-        readonly property string wsRobin: "󱥔"   // Lotus flower
-        readonly property string wsFranky: "󰚗"  // Robot
-        readonly property string wsBrook: "󰝚"   // Music note
-        readonly property string wsJinbe: "󰈼"   // Anchor
-        readonly property string wsDefault: "●"
     }
 
     // Theme names for selector

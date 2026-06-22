@@ -48,8 +48,8 @@ Scope {
                 id: stretchScale
                 origin.x: controlCenterWindow.width / 2
                 origin.y: controlCenterWindow.height / 2
-                xScale: Theme.character === "luffy" ? (root.shown ? 1.0 : 0.8) : 1.0
-                yScale: Theme.character === "luffy" ? (root.shown ? 1.0 : 1.2) : 1.0
+                xScale: Theme.themes[Theme.currentTheme].character === "luffy" ? (root.shown ? 1.0 : 0.8) : 1.0
+                yScale: Theme.themes[Theme.currentTheme].character === "luffy" ? (root.shown ? 1.0 : 1.2) : 1.0
 
                 Behavior on xScale {
                     NumberAnimation {

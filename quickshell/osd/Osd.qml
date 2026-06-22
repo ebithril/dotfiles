@@ -51,7 +51,7 @@ Scope {
             color: Qt.rgba(Theme.backgroundColor.r, Theme.backgroundColor.g, Theme.backgroundColor.b, 0.9)
 
             opacity: root.shouldShowVolOsd ? 1.0 : 0.0
-            scale: root.shouldShowVolOsd ? 1.0 : (Theme.character === "luffy" ? 0.5 : 0.9)
+            scale: root.shouldShowVolOsd ? 1.0 : (Theme.themes[Theme.currentTheme].character === "luffy" ? 0.5 : 0.9)
 
             Behavior on opacity {
                 NumberAnimation {
