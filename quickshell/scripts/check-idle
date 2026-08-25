@@ -1,4 +1,0 @@
-#!/bin/sh
-
-pid=$(pgrep hypridle)
-if [[ "$pid" == "" ]]; then echo 0; else echo 1; fi
